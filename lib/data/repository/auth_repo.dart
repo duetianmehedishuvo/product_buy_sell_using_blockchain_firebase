@@ -1,4 +1,3 @@
-
 import 'package:product_buy_sell/util/app_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,61 +6,55 @@ class AuthRepo {
 
   AuthRepo({required this.sharedPreferences});
 
-
-
   //TODO: for save User Information
-  Future<void> saveUserInformation(String userID, String name, String phone, String email) async {
+  Future<void> saveUserInformation(String address, String name, String phone, int type) async {
     try {
-      await sharedPreferences.setString(AppConstant.userID, userID);
-      await sharedPreferences.setString(AppConstant.userEmail, email);
-      await sharedPreferences.setString(AppConstant.userName, name);
+      await sharedPreferences.setString(AppConstant.userAddress, address);
+      await sharedPreferences.setInt(AppConstant.userType, type);
+      await sharedPreferences.setString(AppConstant.name, name);
       await sharedPreferences.setString(AppConstant.phone, phone);
+      await sharedPreferences.setString(AppConstant.token, phone);
       getUserName();
-      getUserID();
-      getUserEmail();
+      getUserAddress();
+      getUserType();
       getUserPhone();
     } catch (e) {
       rethrow;
     }
   }
 
-
-  Future<void> changeUserName(String value) async {
+  Future<void> changeName(String value) async {
     try {
-      await sharedPreferences.setString(AppConstant.userName, value);
+      await sharedPreferences.setString(AppConstant.name, value);
     } catch (e) {
       rethrow;
     }
   }
 
   //TODO:: for get User Information
-  String getUserID() {
-    return sharedPreferences.getString(AppConstant.userID) ?? "";
+  String getUserAddress() {
+    return sharedPreferences.getString(AppConstant.userAddress) ?? "";
   }
 
   String getUserName() {
-    return sharedPreferences.getString(AppConstant.userName) ?? "";
+    return sharedPreferences.getString(AppConstant.name) ?? "";
   }
 
-  String getUserEmail() {
-    return sharedPreferences.getString(AppConstant.userEmail) ?? "";
+  String getUserType() {
+    return sharedPreferences.getString(AppConstant.userType) ?? "";
   }
 
   String getUserPhone() {
     return sharedPreferences.getString(AppConstant.phone) ?? "";
   }
 
-
-
   // TODO; clear all user Information
   Future<bool> clearUserInformation() async {
-    await sharedPreferences.remove(AppConstant.userID);
-    await sharedPreferences.remove(AppConstant.userName);
+    await sharedPreferences.remove(AppConstant.userAddress);
+    await sharedPreferences.remove(AppConstant.name);
     await sharedPreferences.remove(AppConstant.phone);
-    return await sharedPreferences.remove(AppConstant.userEmail);
+    return await sharedPreferences.remove(AppConstant.userType);
   }
-
-
 
   bool checkTokenExist() {
     return sharedPreferences.containsKey(AppConstant.token);

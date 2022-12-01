@@ -1,61 +1,33 @@
 class UserModels {
   UserModels({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
+    this.name,
     this.phone,
     this.password,
-    this.role,
-    this.outletName,
-    this.updatedAt,
-    this.createdAt,
-    this.adminApproval,
-    this.isAdmin,
+    this.userType,
+    this.address,
   });
 
   UserModels.fromJson(dynamic json) {
-    id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    email = json['email'];
+    name = json['name'];
     phone = json['phone'];
     password = json['password'];
-    role = json['role'];
-    outletName = json['outletName'];
-    updatedAt = json['updated_at'];
-    createdAt = json['created_at'];
-    adminApproval = json['adminApproval'];
-    isAdmin = json['isAdmin'];
+    userType = json['userType'];
+    address = json['address'];
   }
 
-  num? id;
-  String? firstName;
-  String? lastName;
-  String? email;
+  String? name;
   String? phone;
   String? password;
-  num? role;
-  String? outletName;
-  String? updatedAt;
-  String? createdAt;
-  num? adminApproval;
-  num? isAdmin;
+  int? userType;
+  String? address;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['firstName'] = firstName;
-    map['lastName'] = lastName;
-    map['email'] = email;
+    map['name'] = name;
     map['phone'] = phone;
     map['password'] = password;
-    map['role'] = role;
-    map['outletName'] = outletName;
-    map['updated_at'] = updatedAt;
-    map['created_at'] = createdAt;
-    map['adminApproval'] = adminApproval;
-    map['isAdmin'] = isAdmin;
+    map['userType'] = userType;
+    map['address'] = address;
     return map;
   }
 }

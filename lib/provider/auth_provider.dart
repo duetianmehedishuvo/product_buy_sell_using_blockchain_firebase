@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/data/repository/auth_repo.dart';
+import 'package:product_buy_sell/widgets/snackbar_message.dart';
 
 class CallBackResponse {
   bool status;
@@ -21,7 +23,53 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   //TODO:: for Sign Up Section
+  Future<bool> addUser(UserModels userModels, BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    if (await FireStoreDatabaseHelper.checkIfWishUserExists(userModels.phone!) == true) {
+      showMessage(context, message: 'User already exists');
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    } else {
+      FireStoreDatabaseHelper.addUser(userModels);
+      showMessage(context, message: 'User added successfully');
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    }
+  }
 
+  //TODO:: for Login Section
+
+  UserModels userModels = UserModels();
+
+  Future<bool> login(String phone, String password, BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    int v = 0;
+    FireStoreDatabaseHelper.loginUser(phone, password).then((value) async {
+      if (value == 1) {
+        showMessage(context, message: 'Phone No and password don\'t match');
+        v = 1;
+      } else if (value == 0) {
+        showMessage(context, message: 'Login Successfully', isError: false);
+        v = 0;
+        userModels = await FireStoreDatabaseHelper.getUserData(phone);
+        authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
+      } else {
+        showMessage(context, message: 'Phone No not exists');
+        v = -1;
+      }
+    });
+    _isLoading = false;
+    notifyListeners();
+    if (v == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   String data = '';
 
@@ -72,8 +120,8 @@ class AuthProvider with ChangeNotifier {
 
   void getUserInfo() {
     name = authRepo.getUserName();
-    userID = authRepo.getUserID();
-    email = authRepo.getUserEmail();
+    userID = authRepo.getUserAddress();
+    email = authRepo.getUserType();
     phone = authRepo.getUserPhone();
 
     notifyListeners();

@@ -1,17 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:product_buy_sell/data/model/response/user_models.dart';
 
 const admin = 'admin';
 
 // reference
-const noteTopic = 'note_topic';
-const noteDetails = 'note_details';
-const note = 'note';
-const wishlist = 'wishlist';
-const referenceTitle = 'reference_title';
-const referenceDetails = 'reference_details';
+const user = 'user';
 
 class FireStoreDatabaseHelper {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
+
+  // TODO: for user
+  static Future<void> addUser(UserModels userModels) async {
+    return db.collection(user).doc(userModels.phone).set(userModels.toJson());
+  }
+
+  static Future<bool> checkIfWishUserExists(String phoneNo) async {
+    try {
+      var collectionRef = db.collection(user);
+      var doc = await collectionRef.doc(phoneNo).get();
+      return doc.exists;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<int> loginUser(String phone, String password) async {
+    var doc = await db.collection(user).doc(phone).get();
+    if (!doc.exists) {
+      return -1;
+    } else {
+      var snapshot = await db.collection(user).doc(phone).get();
+      UserModels userModels = UserModels.fromJson(snapshot.data());
+      if (userModels.password == password) {
+        return 0;
+      } else {
+        return 1;
+      }
+    }
+  }
+
+  static Future<UserModels> getUserData(String phone) async {
+    var snapshot = await db.collection(user).doc(phone).get();
+    return UserModels.fromJson(snapshot.data());
+  }
 
   // ///////////// *************** for question
   // static Future<void> addNodeTopic(Notes questionModel) async {
@@ -122,15 +153,15 @@ class FireStoreDatabaseHelper {
   //   return db.collection(noteDetails).doc(noteID).collection(wishlist).doc(questionModel.noteId).delete();
   // }
 
-  static Future<bool> checkIfWishlistExists(String docId, String noteID) async {
-    try {
-      var collectionRef = db.collection(noteDetails).doc(noteID).collection(wishlist);
-      var doc = await collectionRef.doc(docId).get();
-      return doc.exists;
-    } catch (e) {
-      throw e;
-    }
-  }
+  // static Future<bool> checkIfWishlistExists(String docId, String noteID) async {
+  //   try {
+  //     var collectionRef = db.collection(noteDetails).doc(noteID).collection(wishlist);
+  //     var doc = await collectionRef.doc(docId).get();
+  //     return doc.exists;
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
 
   static Future addAdmin() async {
     return db.collection(admin).doc(admin).set({'email': 'e', 'password': 'e'});

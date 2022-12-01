@@ -51,10 +51,10 @@ class AppConstant {
   static const String token = 'token';
   static const String countryCode = 'country_code';
   static const String languageCode = 'language_code';
-  static const String userID = 'userID';
-  static const String userName = 'username';
+  static const String userAddress = 'userID';
+  static const String name = 'username';
   static const String apiKey = 'Id4YNMmoieLj4OcBDgZteG9VItleQnba4gS';
-  static const String userEmail = 'useremail';
+  static const String userType = 'useremail';
   static const String phone = 'phone';
   static const String postTypeGroup = 'group';
   static const String postTypeTimeline = 'timeline';

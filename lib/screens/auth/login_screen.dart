@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/helper/open_call_url_map_sms_helper.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
+import 'package:product_buy_sell/screens/admin/admin_dashboard_screen/admin_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
 import 'package:product_buy_sell/util/helper.dart';
@@ -23,6 +25,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: colorBackground,
       body: Consumer<AuthProvider>(
@@ -83,6 +86,17 @@ class LoginScreen extends StatelessWidget {
                             : CustomButton(
                                 btnTxt: 'Login',
                                 onTap: () {
+                                  if(phoneController.text.isEmpty||passwordController.text.isEmpty){
+                                    showMessage(context,message: 'Please fill up all the fields');
+                                  }else{
+                                    authProvider.login(phoneController.text, passwordController.text, context).then((value){
+                                      if(value==true){
+                                        Helper.toRemoveUntilScreen(context, AdminDashboardScreen());
+                                      }else{
+
+                                      }
+                                    });
+                                  }
                                   // authProvider.signIn(phoneController.text, passwordController.text).then((value) {
                                   //   if (value.status == true) {
                                   //     showMessage(context, message: value.message, isError: false);

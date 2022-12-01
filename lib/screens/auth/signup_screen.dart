@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
 import 'package:product_buy_sell/util/size.util.dart';
@@ -14,17 +15,11 @@ class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController outletNameController = TextEditingController();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final FocusNode outletNameFocus = FocusNode();
-  final FocusNode firstNameFocus = FocusNode();
-  final FocusNode lastNameFocus = FocusNode();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final FocusNode nameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();
-  final FocusNode emailFocus = FocusNode();
-  final FocusNode cityFocus = FocusNode();
+  final FocusNode addressFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
   @override
@@ -54,91 +49,41 @@ class SignupScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(9)),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              const SizedBox(width: 3),
-                              const Expanded(child: CustomText(title: 'Select Role', color: Colors.black, fontSize: 16)),
-                              DropdownButton<String>(
-                                value: authProvider.selectUserRoll,
-                                items: authProvider.userRollLists
-                                    .map((label) =>
-                                        DropdownMenuItem(child: CustomText(title: label, color: Colors.black, fontSize: 17), value: label))
-                                    .toList(),
-                                underline: const SizedBox.shrink(),
-                                onChanged: (value) {
-                                  authProvider.changeUserRoll(value!);
-                                },
-                              ),
-                            ],
-                          ),
                           CustomTextField(
-                            hintText: 'Outlet Name',
+                            hintText: 'Name *',
                             prefixIconUrl: Icons.share_location_outlined,
                             inputType: TextInputType.name,
                             isShowPrefixIcon: true,
                             verticalSize: 13,
-                            focusNode: outletNameFocus,
-                            nextFocus: firstNameFocus,
-                            controller: outletNameController,
-                          ),
-                          const SizedBox(height: 15),
-                          CustomTextField(
-                            hintText: 'First Name',
-                            prefixIconUrl: Icons.account_circle,
-                            inputType: TextInputType.name,
-                            isShowPrefixIcon: true,
-                            verticalSize: 13,
-                            focusNode: firstNameFocus,
-                            nextFocus: lastNameFocus,
-                            controller: firstNameController,
-                          ),
-                          const SizedBox(height: 15),
-                          CustomTextField(
-                            hintText: 'Last Name',
-                            prefixIconUrl: Icons.account_circle,
-                            inputType: TextInputType.name,
-                            isShowPrefixIcon: true,
-                            verticalSize: 13,
-                            focusNode: lastNameFocus,
+                            focusNode: nameFocus,
                             nextFocus: phoneFocus,
-                            controller: lastNameController,
+                            controller: nameController,
                           ),
                           const SizedBox(height: 15),
                           CustomTextField(
-                            hintText: 'Mobile Number',
-                            prefixIconUrl: Icons.phone_android_outlined,
+                            hintText: 'Phone Number *',
+                            prefixIconUrl: Icons.account_circle,
                             inputType: TextInputType.phone,
                             isShowPrefixIcon: true,
                             verticalSize: 13,
                             focusNode: phoneFocus,
-                            nextFocus: emailFocus,
+                            nextFocus: addressFocus,
                             controller: phoneController,
                           ),
                           const SizedBox(height: 15),
                           CustomTextField(
-                            hintText: 'Email',
-                            prefixIconUrl: Icons.mail_rounded,
-                            inputType: TextInputType.emailAddress,
+                            hintText: 'addresses *',
+                            prefixIconUrl: Icons.account_circle,
+                            inputType: TextInputType.streetAddress,
                             isShowPrefixIcon: true,
                             verticalSize: 13,
-                            focusNode: emailFocus,
-                            nextFocus: cityFocus,
-                            controller: emailController,
-                          ),
-                          const SizedBox(height: 15),
-                          CustomTextField(
-                            hintText: 'City',
-                            prefixIconUrl: Icons.add_location_sharp,
-                            inputType: TextInputType.name,
-                            isShowPrefixIcon: true,
-                            verticalSize: 13,
-                            focusNode: cityFocus,
+                            focusNode: addressFocus,
                             nextFocus: passwordFocus,
-                            controller: cityController,
+                            controller: addressController,
                           ),
                           const SizedBox(height: 15),
                           CustomTextField(
-                            hintText: 'Enter your password',
+                            hintText: 'Enter your password *',
                             prefixIconUrl: Icons.lock,
                             inputType: TextInputType.text,
                             isShowPrefixIcon: true,
@@ -149,13 +94,34 @@ class SignupScreen extends StatelessWidget {
                             isShowSuffixIcon: true,
                             isPassword: true,
                           ),
-
                           const SizedBox(height: 20),
                           authProvider.isLoading
                               ? const Center(child: CircularProgressIndicator())
                               : CustomButton(
                                   btnTxt: 'Register',
                                   onTap: () {
+                                    if (nameController.text.isEmpty ||
+                                        phoneController.text.isEmpty ||
+                                        addressController.text.isEmpty ||
+                                        passwordController.text.isEmpty) {
+                                      showMessage(context, message: 'Please fill upp all the fields');
+                                    } else {
+                                      authProvider
+                                          .addUser(
+                                              UserModels(
+                                                  name: nameController.text,
+                                                  address: addressController.text,
+                                                  password: passwordController.text,
+                                                  phone: phoneController.text,
+                                                  userType: 0),
+                                              context)
+                                          .then((value) {
+                                        if (value == true) {
+                                          Navigator.of(context).pop();
+                                        }
+                                      });
+                                    }
+
                                     // authProvider
                                     //     .signup(firstNameController.text, lastNameController.text, phoneController.text,
                                     //         emailController.text, passwordController.text, outletNameController.text)
