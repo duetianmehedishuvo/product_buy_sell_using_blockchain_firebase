@@ -61,6 +61,7 @@ class AuthProvider with ChangeNotifier {
         showMessage(context, message: 'Phone No not exists');
         v = -1;
       }
+      notifyListeners();
     });
     _isLoading = false;
     notifyListeners();
