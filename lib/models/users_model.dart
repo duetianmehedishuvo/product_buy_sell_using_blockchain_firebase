@@ -1,12 +1,19 @@
 class Users {
-  final String userId;
-  final String userEmail;
-  final String userName;
+  final String phone;
+  final String name;
+  final String address;
+  final String password;
+  final int userType;
 
-  Users(this.userId, this.userEmail, this.userName);
+  Users(this.phone, this.name, this.address, this.password, this.userType);
 
   Users.fromJson(Map<String, dynamic> json)
-      : userId = json['user_id'],
-        userEmail = json['user_email'],
-        userName = json['user_name'];
+      : phone = json['user_phone'],
+        name = json['user_name'],
+        password = json['user_password'],
+        userType = json['user_type'],
+        address = json['user_address'];
+
+  Map<String, dynamic> toJson() =>
+      {'user_phone': phone, 'user_name': name, 'user_password': password, 'user_type': userType, 'user_address': address};
 }

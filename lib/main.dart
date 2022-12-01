@@ -11,11 +11,13 @@ import 'di_container.dart' as di;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: 'AIzaSyC5CJz2XFXdE8d-i3aSpjxx5Tevn7BOxo8',
-          appId: '1:690874350216:android:c39c2d9c936b22fa977d3d',
-          messagingSenderId: '690874350216',
-          projectId: 'in-search-of-truth-4390d'));
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyBuoXOqA0x8Ehm0cDW1SI79baYTUIxdd3Q",
+      appId: "1:842252732971:android:ccd63b08b13b7fe8b2b86e",
+      messagingSenderId: "842252732971",
+      projectId: "product-buy-sell-blockchain",
+    ),
+  );
   await di.init();
   runApp(MultiProvider(
     providers: [

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "971868891524",
-    "project_id": "simple-islamic-note",
-    "storage_bucket": "simple-islamic-note.appspot.com"
+    "project_number": "842252732971",
+    "project_id": "product-buy-sell-blockchain",
+    "storage_bucket": "product-buy-sell-blockchain.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:971868891524:android:7667584df6210fc0b595d1",
+        "mobilesdk_app_id": "1:842252732971:android:ccd63b08b13b7fe8b2b86e",
         "android_client_info": {
-          "package_name": "com.shuvo.simpleisamicapp"
+          "package_name": "com.product_buy_sell.https"
         }
       },
       "oauth_client": [
         {
-          "client_id": "971868891524-5clsdrvm359aqokl6h9p72oknjak6aqr.apps.googleusercontent.com",
+          "client_id": "842252732971-9qm1ipmcr85rho6t7u66js6vkb6lm2kf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDb-cvna4SKwhyesXtQuqBSNwndXTJPANc"
+          "current_key": "AIzaSyBuoXOqA0x8Ehm0cDW1SI79baYTUIxdd3Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "971868891524-5clsdrvm359aqokl6h9p72oknjak6aqr.apps.googleusercontent.com",
+              "client_id": "842252732971-9qm1ipmcr85rho6t7u66js6vkb6lm2kf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

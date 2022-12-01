@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shuvo.simpleisamicapp">
+    package="com.product_buy_sell.https">
    <application
-        android:label="IN SEARCH OF TRUTH"
+        android:label="Product Buy Sell"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

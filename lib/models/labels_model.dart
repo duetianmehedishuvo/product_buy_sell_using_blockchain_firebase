@@ -8,8 +8,5 @@ class Labels {
       : labelId = json['label_id'],
         labelName = json['label_name'];
 
-  Map<String, dynamic> toJson() => {
-    'label_id': labelId,
-    'label_name': labelName
-  };
+  Map<String, dynamic> toJson() => {'label_id': labelId, 'label_name': labelName};
 }
