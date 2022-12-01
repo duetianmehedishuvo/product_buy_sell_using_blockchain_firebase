@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "971868891524",
+    "project_id": "simple-islamic-note",
+    "storage_bucket": "simple-islamic-note.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971868891524:android:7667584df6210fc0b595d1",
+        "android_client_info": {
+          "package_name": "com.shuvo.simpleisamicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971868891524-5clsdrvm359aqokl6h9p72oknjak6aqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb-cvna4SKwhyesXtQuqBSNwndXTJPANc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971868891524-5clsdrvm359aqokl6h9p72oknjak6aqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
