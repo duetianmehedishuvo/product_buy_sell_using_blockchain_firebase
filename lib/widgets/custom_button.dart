@@ -1,15 +1,17 @@
+import 'package:product_buy_sell/util/theme/app_colors.dart';
+import 'package:product_buy_sell/util/theme/text.styles.dart';
+import 'package:product_buy_sell/widgets/custom_text.dart';
+import 'package:product_buy_sell/widgets/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/helpers/color.dart';
-import 'package:product_buy_sell/widgets/rounded_button.dart';
 
 IconData? backIcon(BuildContext context) {
   switch (Theme.of(context).platform) {
     case TargetPlatform.android:
     case TargetPlatform.fuchsia:
-      return Icons.arrow_back;
-    case TargetPlatform.iOS:
       return Icons.arrow_back_ios;
+    case TargetPlatform.iOS:
+      return Icons.arrow_back;
     case TargetPlatform.linux:
       // TODO: Handle this case.
       break;
@@ -49,7 +51,6 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
   final String? btnTxt;
   final Color? backgroundColor;
-  final Color? textColor;
   final double? height;
   final bool? isStroked;
   final bool? isShowRightIcon;
@@ -65,14 +66,13 @@ class CustomButton extends StatelessWidget {
   const CustomButton(
       {this.onTap,
       @required this.btnTxt,
-      this.backgroundColor = kSecondaryColor,
-      this.textColor = Colors.white,
+      this.backgroundColor = colorPrimary,
       this.height = 45.0,
-      this.fontSize = 14.0,
+      this.fontSize = 18.0,
       this.isStroked = false,
       this.isShowRightIcon = false,
       this.isShowLeftIcon = false,
-      this.textWhiteColor = false,
+      this.textWhiteColor = true,
       this.radius = 9.0,
       this.leftPadding = 0,
       this.rightPadding = 0,
@@ -92,11 +92,89 @@ class CustomButton extends StatelessWidget {
         height: height,
         padding: EdgeInsets.fromLTRB(leftPadding!, topPadding!, rightPadding!, bottomPadding!),
         alignment: Alignment.center,
-        child: Text(btnTxt!, style: TextStyle(color: textColor, fontSize: fontSize), textAlign: TextAlign.center),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            isShowLeftIcon! ? const Icon(Icons.add_circle, color: Colors.white) : const SizedBox.shrink(),
+            Expanded(
+                child: CustomText(
+              title: btnTxt!,
+              textStyle: sfProStyle600SemiBold.copyWith(color: textWhiteColor! ? AppColors.whiteColorLight : AppColors.black, fontSize: fontSize),
+              textAlign: TextAlign.center,
+            )),
+            isShowRightIcon! ? Icon(rightIcon(context), color: isStroked! ? Colors.red : Colors.white) : const SizedBox.shrink()
+          ],
+        ),
       ),
     );
   }
 }
+
+class CustomButton2 extends StatelessWidget {
+  final VoidCallback? onTap;
+  final String? btnTxt;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? height;
+  final bool? isStroked;
+  final bool? isShowRightIcon;
+  final bool? isShowLeftIcon;
+  final double? fontSize;
+  final double? radius;
+  final bool? textWhiteColor;
+  final double? leftPadding;
+  final double? rightPadding;
+  final double? topPadding;
+  final double? bottomPadding;
+
+  const CustomButton2(
+      {this.onTap,
+        @required this.btnTxt,
+        this.backgroundColor = colorPrimary,
+        this.textColor = Colors.white,
+        this.height = 45.0,
+        this.fontSize = 18.0,
+        this.isStroked = false,
+        this.isShowRightIcon = false,
+        this.isShowLeftIcon = false,
+        this.textWhiteColor = true,
+        this.radius = 9.0,
+        this.leftPadding = 0,
+        this.rightPadding = 0,
+        this.topPadding = 0,
+        this.bottomPadding = 0,
+        Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RoundedButton(
+      padding: 0,
+      onPress: onTap,
+      backgroundColor: MaterialStateProperty.all(backgroundColor!),
+      boarderRadius: radius!,
+      child: Container(
+        height: height,
+        padding: EdgeInsets.fromLTRB(leftPadding!, topPadding!, rightPadding!, bottomPadding!),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            isShowLeftIcon! ? const Icon(Icons.add_circle, color: Colors.white) : const SizedBox.shrink(),
+            Expanded(
+                child: CustomText(
+                  title: btnTxt!,
+                  textStyle: sfProStyle600SemiBold.copyWith(color: textColor, fontSize: fontSize),
+                  textAlign: TextAlign.center,
+                )),
+            isShowRightIcon! ? Icon(rightIcon(context), color: isStroked! ? Colors.red : Colors.white) : const SizedBox.shrink()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class IconButton1 extends StatelessWidget {
   final VoidCallback? onTap;
@@ -128,6 +206,24 @@ class IconButton1 extends StatelessWidget {
           ]),
           child: Icon(icon, color: Colors.white),
         ),
+      ),
+    );
+  }
+}
+
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({this.title = 'Back', Key? key}) : super(key: key);
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Icon(backIcon(context), color: Colors.white), CustomText(title: title)],
       ),
     );
   }

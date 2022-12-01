@@ -1,15 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:product_buy_sell/localization/app_localization.dart';
+import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
+import 'package:product_buy_sell/provider/auth_provider.dart';
+import 'package:product_buy_sell/provider/language_provider.dart';
+import 'package:product_buy_sell/provider/localization_provider.dart';
+import 'package:product_buy_sell/provider/splash_provider.dart';
+import 'package:product_buy_sell/provider/theme_provider.dart';
+import 'package:product_buy_sell/screens/splash/splash_screen.dart';
+import 'package:product_buy_sell/util/app_constant.dart';
+import 'package:product_buy_sell/util/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:product_buy_sell/notes_navigation.dart';
-import 'package:product_buy_sell/provider/note_provider.dart';
-import 'package:product_buy_sell/provider/zakat_provider.dart';
 
 import 'di_container.dart' as di;
 
-//! Test a particualar file.
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyBuoXOqA0x8Ehm0cDW1SI79baYTUIxdd3Q",
@@ -18,26 +26,33 @@ Future<void> main() async {
       projectId: "product-buy-sell-blockchain",
     ),
   );
-  await di.init();
+
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => di.sl<ZakatProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<NoteProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<AdminDashboardProvider>()),
+
     ],
-    child: const Noter(),
+    child: const MyApp(),
   ));
 }
 
-class Noter extends StatelessWidget {
-  const Noter({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+
+    return MaterialApp(
+      title: 'Product Buy Sell',
+      theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
-      title: 'IN SEARCH OF TRUTH',
-      home: NestNotes(),
+      home: const SplashScreen(),
     );
   }
 }
