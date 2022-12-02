@@ -134,8 +134,9 @@ class AdminDashboardProvider with ChangeNotifier {
   UserModels deliveryManModels = UserModels();
   UserModels distributorsModels = UserModels();
 
-  void getUserInfo(String deliveryManID, String distributorsID) async {
+  void getUserInfo(String deliveryManID, String distributorsID,String productID) async {
     _isLoading = true;
+    productID = productID;
     // notifyListeners();
     deliveryManModels = UserModels();
     distributorsModels = UserModels();

@@ -5,8 +5,10 @@ import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
+import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final ProductModel productModel;
@@ -22,8 +24,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AdminDashboardProvider>(context, listen: false)
-        .getUserInfo(decryptedText(widget.productModel.deliveryManID!), decryptedText(widget.productModel.distributorsID!));
+    Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.deliveryManID!),
+        decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
   }
 
   @override
@@ -32,6 +34,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       appBar: buildAppBar("Product Details"),
       body: Consumer<AdminDashboardProvider>(
         builder: (context, dashboardProvider, child) => ListView(
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           children: [
             customRow1('ID:', widget.productModel.productId.toString()),
@@ -68,7 +71,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
-                              BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                             ],
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
@@ -91,7 +95,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
-                              BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                             ],
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
@@ -108,7 +113,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       )
                     ],
-                  )
+                  ),
+
+            const SizedBox(height: 15),
+
+            SizedBox(
+              height: 200,
+              child: Screenshot(
+                controller: dashboardProvider.screenshotController,
+                child: dashboardProvider.qrCodeWidget(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            CustomButton(
+              btnTxt: 'SAVE QR',
+              onTap: () {
+                dashboardProvider.captureScreenshot();
+              },
+            ),
           ],
         ),
       ),
