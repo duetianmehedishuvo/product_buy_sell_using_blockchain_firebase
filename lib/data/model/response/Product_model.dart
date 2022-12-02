@@ -6,6 +6,9 @@ class ProductModel {
     this.price,
     this.manufacturerDate,
     this.expiredDate,
+    this.deliveryManID = "-1",
+    this.distributorsID = "-1",
+    this.status = 0,
   });
 
   ProductModel.fromJson(dynamic json) {
@@ -14,7 +17,10 @@ class ProductModel {
     quantity = json['quantity'];
     price = json['price'];
     manufacturerDate = json['manufacturer_date'];
+    distributorsID = json['distributorsID'];
     expiredDate = json['expired_date'];
+    status = json['status'];
+    deliveryManID = json['deliveryManID'];
   }
 
   int? productId;
@@ -23,6 +29,9 @@ class ProductModel {
   double? price;
   String? manufacturerDate;
   String? expiredDate;
+  String? deliveryManID;
+  String? distributorsID;
+  int? status;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -30,6 +39,9 @@ class ProductModel {
     map['title'] = title;
     map['quantity'] = quantity;
     map['price'] = price;
+    map['status'] = status;
+    map['distributorsID'] = distributorsID;
+    map['deliveryManID'] = deliveryManID;
     map['manufacturer_date'] = manufacturerDate;
     map['expired_date'] = expiredDate;
     return map;

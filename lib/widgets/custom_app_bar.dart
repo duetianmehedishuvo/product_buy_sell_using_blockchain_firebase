@@ -1,5 +1,7 @@
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:product_buy_sell/util/theme/text.styles.dart';
+import 'package:product_buy_sell/widgets/custom_text.dart';
 
 import '../util/image.dart';
 
@@ -75,4 +77,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size(double.maxFinite, appBarSize!);
+}
+
+AppBar buildAppBar(String title) {
+  return AppBar(
+      title: CustomText(title: title, textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 20)),
+      backgroundColor: colorPrimary,
+      centerTitle: true,
+      elevation: 0,
+      toolbarHeight: 60);
 }

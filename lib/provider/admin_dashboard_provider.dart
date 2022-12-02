@@ -57,7 +57,7 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
     productID = productModels.productId!;
     FireStoreDatabaseHelper.addProduct(productModels);
-    showMessage(context, message: 'Product added successfully',isError: false);
+    showMessage(context, message: 'Product added successfully', isError: false);
     _isLoading = false;
     notifyListeners();
     return true;
@@ -68,7 +68,7 @@ class AdminDashboardProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     FireStoreDatabaseHelper.assignProducts(selectDeliveryMan.phone!, selectDistributors.phone!, productID.toString());
-    showMessage(context, message: 'Product Assign successfully',isError: false);
+    showMessage(context, message: 'Product Assign successfully', isError: false);
     _isLoading = false;
     notifyListeners();
     return true;
@@ -111,7 +111,7 @@ class AdminDashboardProvider with ChangeNotifier {
       height: 200,
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: SfBarcodeGenerator(
-        value: encryptedText("Products_ $productID"),
+        value: "Products_ ${encryptedText(productID.toString())}",
         symbology: QRCode(),
         showValue: true,
       ),
@@ -129,5 +129,19 @@ class AdminDashboardProvider with ChangeNotifier {
     final time = DateTime.now().toIso8601String().replaceAll('.', '_').replaceAll(':', "_");
     final result = await ImageGallerySaver.saveImage(bytes, name: 'screenshot_$time');
     return result['filePath'];
+  }
+
+  UserModels deliveryManModels = UserModels();
+  UserModels distributorsModels = UserModels();
+
+  void getUserInfo(String deliveryManID, String distributorsID) async {
+    _isLoading = true;
+    // notifyListeners();
+    deliveryManModels = UserModels();
+    distributorsModels = UserModels();
+    deliveryManModels = await FireStoreDatabaseHelper.getUserData(deliveryManID);
+    distributorsModels = await FireStoreDatabaseHelper.getUserData(distributorsID);
+    _isLoading = false;
+    notifyListeners();
   }
 }

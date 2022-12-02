@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_buy_sell/data/model/response/Product_model.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
+import 'package:product_buy_sell/helper/secret_key.dart';
 
 const admin = 'admin';
 
@@ -77,12 +78,17 @@ class FireStoreDatabaseHelper {
   }
 
   static Future<void> assignProducts(String deliveryManID, String distributorsID, String productID) async {
+    db
+        .collection(products)
+        .doc(productID)
+        .update({"distributorsID": encryptedText(distributorsID), "deliveryManID": encryptedText(deliveryManID), "status": 1});
+
     return db
         .collection(deliveryMan)
         .doc(deliveryManID)
         .collection(deliveryManID)
         .doc(productID)
-        .set({'distributors_id': distributorsID, 'product_id': productID, 'status': 0});
+        .set({'distributors_id': encryptedText(distributorsID), 'product_id': encryptedText(productID), 'status': 0});
   }
 
   // ///////////// *************** for question

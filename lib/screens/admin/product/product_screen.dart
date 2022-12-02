@@ -4,6 +4,7 @@ import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/Product_model.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/screens/admin/product/add_product_screen.dart';
+import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -40,19 +41,18 @@ class ProductScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else {
               if (snapshots.data!.docs.isEmpty) {
-                return const Text('No data available');
+                return Center(child:  Text('No data available',style: sfProStyle600SemiBold.copyWith(fontSize: 16),));
               } else {
                 return ListView.builder(
                   itemCount: snapshots.data!.docs.length,
                   physics: const BouncingScrollPhysics(),
-                  reverse: true,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   itemBuilder: (context, index) {
                     ProductModel products = ProductModel.fromJson(snapshots.data!.docs[index].data() as Map<String, dynamic>);
 
                     return InkWell(
                       onTap: () {
-                        // Helper.toScreen(context, UserDetailsScreen(products));
+                        Helper.toScreen(context, ProductDetailsScreen(products));
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

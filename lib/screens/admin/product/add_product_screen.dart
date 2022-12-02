@@ -119,6 +119,8 @@ class AddProductScreen extends StatelessWidget {
                     price: double.parse(priceEditingController.text),
                     manufacturerDate: encryptedText(dashboardProvider.manufacturerDate),
                     expiredDate: encryptedText(dashboardProvider.expireDateText),
+                    deliveryManID: encryptedText("-1"),
+                    distributorsID: encryptedText("-1"),
                   );
 
                   dashboardProvider.addProduct(productModel, context).then((value) {
