@@ -14,13 +14,13 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPress,
-      child: Padding(padding: EdgeInsets.all(padding), child: child),
       style: ButtonStyle(
         backgroundColor: backgroundColor,
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(boarderRadius),
         )),
       ),
+      child: Padding(padding: EdgeInsets.all(padding), child: child),
     );
   }
 }

@@ -156,8 +156,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           suffixIcon: widget.isShowSuffixIcon! && !widget.isShowSuffixWidget!
               ? widget.isPassword!
                   ? InkWell(
-                      child: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: colorPrimary, size: 23),
-                      onTap: _toggle)
+                      onTap: _toggle,
+                      child: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: colorPrimary, size: 23))
                   : widget.isIcon!
                       ? IconButton(
                           onPressed: widget.onSuffixTap,

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
-import 'package:product_buy_sell/data/model/response/Product_model.dart';
+import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/screens/admin/product/add_product_screen.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';

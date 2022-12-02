@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:product_buy_sell/data/model/response/Product_model.dart';
+import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 
@@ -53,6 +53,11 @@ class FireStoreDatabaseHelper {
     return db.collection(products).doc(productModel.productId.toString()).set(productModel.toJson());
   }
 
+  static Future<ProductModel> getProduct(String productId) async {
+    var snapshot = await db.collection(products).doc(productId).get();
+    return ProductModel.fromJson(snapshot.data());
+  }
+
   static Future<List<UserModels>> distributorsLists() async {
     List<UserModels> data = [];
     await FirebaseFirestore.instance.collection(user).get().then((value) {
@@ -89,6 +94,20 @@ class FireStoreDatabaseHelper {
         .collection(deliveryManID)
         .doc(productID)
         .set({'distributors_id': encryptedText(distributorsID), 'product_id': encryptedText(productID), 'status': 0});
+  }
+
+  static Future<List<ProductModel>> getDeliveryManAssignProducts(String deliveryManID) async {
+    List<ProductModel> data = [];
+    await FirebaseFirestore.instance.collection(deliveryMan).doc(deliveryManID).collection(deliveryManID).get().then((value) async {
+      for (var i in value.docs) {
+        data.add(await getProduct(decryptedText(i.data()['product_id'])));
+      }
+    });
+    return data;
+  }
+
+  static Future<void> updateProductStatus(String productID, {int status = 2}) async {
+    return db.collection(products).doc(productID).update({"status": status});
   }
 
   // ///////////// *************** for question

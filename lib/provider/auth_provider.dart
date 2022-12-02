@@ -57,7 +57,9 @@ class AuthProvider with ChangeNotifier {
       return 1;
     } else if (value == 0) {
       userModels = await FireStoreDatabaseHelper.getUserData(phone);
+      userType = userModels.userType!;
       authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
+      Timer(Duration(seconds: 4), () {});
       notifyListeners();
       return 0;
     } else {

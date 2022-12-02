@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
+import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
@@ -10,28 +11,48 @@ import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class DeliveryManDetailsScreen extends StatefulWidget {
   final ProductModel productModel;
+  final int index;
 
-  const ProductDetailsScreen(this.productModel, {Key? key}) : super(key: key);
+  const DeliveryManDetailsScreen(this.productModel, this.index, {Key? key}) : super(key: key);
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  State<DeliveryManDetailsScreen> createState() => _DeliveryManDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _DeliveryManDetailsScreenState extends State<DeliveryManDetailsScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.deliveryManID!),
-        decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
+    Provider.of<AdminDashboardProvider>(context, listen: false)
+        .getDistributorsDetails(decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar("Product Details"),
+      bottomNavigationBar: Container(
+        height: 50,
+        child: Consumer<AdminDashboardProvider>(
+          builder: (context, dashboardProvider, child) => widget.productModel.status == 1 || widget.productModel.status == 2
+              ? CustomButton(
+                  btnTxt: widget.productModel.status == 1 ? 'Click here to start delivery' : "CANCEL DELIVERY",
+                  radius: 0,
+                  onTap: () {
+                    dashboardProvider.updateProducts(widget.index, widget.productModel.status == 1 ? 2 : 1).then((value) {
+                      if (value == true) {
+                        Navigator.of(context).pop();
+                      }
+                    });
+                    // dashboardProvider.captureScreenshot();
+                  },
+                )
+              : const SizedBox.shrink(),
+        ),
+      ),
       body: Consumer<AdminDashboardProvider>(
         builder: (context, dashboardProvider, child) => ListView(
           physics: const BouncingScrollPhysics(),
@@ -89,34 +110,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Container(
-                        width: getAppSizeWidth(context),
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                                title: 'DELIVERY MAN DETAILS:',
-                                textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-                            Divider(color: Colors.red.withOpacity(.3)),
-                            customRow('ID:', dashboardProvider.deliveryManModels.phone!),
-                            customRow('NAME:', dashboardProvider.deliveryManModels.name!),
-                            customRow('ADDRESS:', dashboardProvider.deliveryManModels.address!),
-                          ],
-                        ),
-                      )
                     ],
                   ),
-
             const SizedBox(height: 15),
-
             SizedBox(
               height: 200,
               child: Screenshot(
@@ -125,18 +121,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            CustomButton(
-              btnTxt: 'SAVE QR',
-              onTap: () {
-                dashboardProvider.captureScreenshot();
-              },
-            ),
           ],
         ),
       ),
     );
   }
-
 
   Widget customRow(String title, String subTitle) {
     return Container(
@@ -150,14 +139,4 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
-}
-Widget customRow1(String title, String subTitle) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(title.toUpperCase(), style: sfProStyle700Bold.copyWith(fontSize: 15)),
-      const SizedBox(width: 10),
-      Expanded(child: Text(subTitle, style: sfProStyle500Medium.copyWith(fontSize: 17))),
-    ],
-  );
 }

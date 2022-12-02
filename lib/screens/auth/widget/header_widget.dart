@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -44,9 +43,10 @@ class HeaderWidget extends StatelessWidget {
               width: getAppSizeWidth(context) * 0.6,
               margin: const EdgeInsets.symmetric(horizontal: 40),
               height: 84,
+              alignment: Alignment.center,
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40)),
-              child: Image.asset(ImagesModel.logo)),
+              child: Text('WELCOME! USER', style: sfProStyle900Black.copyWith(color: colorPrimary))),
           const SizedBox(height: 8),
           Center(child: CustomText(title: title, textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 18))),
           const SizedBox(height: 5),

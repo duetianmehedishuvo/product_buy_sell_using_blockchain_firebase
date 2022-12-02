@@ -124,7 +124,7 @@ class AdminDashboardScreen extends StatelessWidget {
   Widget menuWidget3(String title) {
     return Container(
       height: 70,
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: const [BoxShadow(color: colorShadow, blurRadius: 10.0, spreadRadius: 3.0, offset: Offset(0.0, 0.0))],

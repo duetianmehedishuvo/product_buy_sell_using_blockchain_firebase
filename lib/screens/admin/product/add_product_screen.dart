@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/data/model/response/Product_model.dart';
+import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/add_product_screen2.dart';

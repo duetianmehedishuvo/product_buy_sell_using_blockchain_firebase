@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
-import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -9,7 +7,6 @@ import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class AddProductScreen2 extends StatefulWidget {
   const AddProductScreen2({Key? key}) : super(key: key);

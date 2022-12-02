@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:product_buy_sell/localization/app_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/provider/language_provider.dart';
@@ -7,9 +7,7 @@ import 'package:product_buy_sell/provider/localization_provider.dart';
 import 'package:product_buy_sell/provider/splash_provider.dart';
 import 'package:product_buy_sell/provider/theme_provider.dart';
 import 'package:product_buy_sell/screens/splash/splash_screen.dart';
-import 'package:product_buy_sell/util/app_constant.dart';
 import 'package:product_buy_sell/util/theme/app_theme.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;

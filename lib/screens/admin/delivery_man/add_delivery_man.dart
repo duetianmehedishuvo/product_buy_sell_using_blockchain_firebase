@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
-import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
 import 'package:product_buy_sell/widgets/custom_button.dart';
@@ -35,7 +34,7 @@ class AddDeliveryManScreen extends StatelessWidget {
         builder: (context, authProvider, child) => ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),

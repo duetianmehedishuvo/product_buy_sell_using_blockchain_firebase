@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/helper/open_call_url_map_sms_helper.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/admin_dashboard_screen/admin_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
+import 'package:product_buy_sell/screens/deliveryman/dashboard/deiveryman_dashboard_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/size.util.dart';
@@ -93,7 +93,12 @@ class LoginScreen extends StatelessWidget {
                                         showMessage(context, message: 'Phone No and password don\'t match');
                                       } else if (value == 0) {
                                         showMessage(context, message: 'Login Successfully', isError: false);
-                                        Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
+                                        authProvider.getUserInfo();
+                                        if (authProvider.userType == 2) {
+                                          Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
+                                        } else {
+                                          Helper.toRemoveUntilScreen(context, const DeliveryDashboardScreen());
+                                        }
                                       } else {
                                         showMessage(context, message: 'Phone No not exists');
                                       }
@@ -127,21 +132,6 @@ class LoginScreen extends StatelessWidget {
                                 child: const CustomText(
                                     title: 'Click Here', decoration: TextDecoration.underline, color: colorBlueDark, fontSize: 16)),
                           ],
-                        ),
-                        const SizedBox(height: 20),
-                        InkWell(
-                          onTap: () {
-                            openWhatsapp(context: context, text: 'Write your problems?..', number: '+919790090028');
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(ImagesModel.whatsAPPIcons, width: 50, height: 50),
-                              CustomText(
-                                  title: 'Any issues whats app us ',
-                                  textStyle: sfProStyle300Light.copyWith(color: colorPrimary, fontSize: 15))
-                            ],
-                          ),
                         ),
                         const SizedBox(height: 10),
                       ],

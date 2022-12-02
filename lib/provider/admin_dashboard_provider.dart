@@ -6,7 +6,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
-import 'package:product_buy_sell/data/model/response/Product_model.dart';
+import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/data/repository/admin_dashboard_repo.dart';
 import 'package:product_buy_sell/helper/date_converter.dart';
@@ -134,7 +134,7 @@ class AdminDashboardProvider with ChangeNotifier {
   UserModels deliveryManModels = UserModels();
   UserModels distributorsModels = UserModels();
 
-  void getUserInfo(String deliveryManID, String distributorsID,String productID) async {
+  void getUserInfo(String deliveryManID, String distributorsID, String productID) async {
     _isLoading = true;
     productID = productID;
     // notifyListeners();
@@ -144,5 +144,38 @@ class AdminDashboardProvider with ChangeNotifier {
     distributorsModels = await FireStoreDatabaseHelper.getUserData(distributorsID);
     _isLoading = false;
     notifyListeners();
+  }
+
+  void getDistributorsDetails(String distributorsID, String p) async {
+    _isLoading = true;
+    productID = int.parse(p);
+    distributorsModels = UserModels();
+    distributorsModels = await FireStoreDatabaseHelper.getUserData(distributorsID);
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  List<ProductModel> products = [];
+
+  void getDeliveryManProductInfo(String deliveryManID) async {
+    _isLoading = true;
+    products.clear();
+    products = [];
+    products.addAll(await FireStoreDatabaseHelper.getDeliveryManAssignProducts(deliveryManID));
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<bool> updateProducts(int index, int status) async {
+    _isLoading = true;
+    try {
+      await FireStoreDatabaseHelper.updateProductStatus(productID.toString(), status: status);
+      products[index].status = status;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
