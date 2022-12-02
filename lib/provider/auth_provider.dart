@@ -44,31 +44,24 @@ class AuthProvider with ChangeNotifier {
 
   UserModels userModels = UserModels();
 
-  Future<bool> login(String phone, String password, BuildContext context) async {
+  Future<int> login(String phone, String password, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
-    int v = 0;
-    FireStoreDatabaseHelper.loginUser(phone, password).then((value) async {
-      if (value == 1) {
-        showMessage(context, message: 'Phone No and password don\'t match');
-        v = 1;
-      } else if (value == 0) {
-        showMessage(context, message: 'Login Successfully', isError: false);
-        v = 0;
-        userModels = await FireStoreDatabaseHelper.getUserData(phone);
-        authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
-      } else {
-        showMessage(context, message: 'Phone No not exists');
-        v = -1;
-      }
-      notifyListeners();
-    });
+
+    int value = await FireStoreDatabaseHelper.loginUser(phone, password);
+
     _isLoading = false;
+
     notifyListeners();
-    if (v == 0) {
-      return true;
+    if (value == 1) {
+      return 1;
+    } else if (value == 0) {
+      userModels = await FireStoreDatabaseHelper.getUserData(phone);
+      authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
+      notifyListeners();
+      return 0;
     } else {
-      return false;
+      return -1;
     }
   }
 
@@ -115,16 +108,15 @@ class AuthProvider with ChangeNotifier {
 
   // get User INFO:
   String name = '';
-  String userID = '';
+  String userAddress = '';
   String phone = '';
-  String email = '';
+  int userType = 0;
 
   void getUserInfo() {
     name = authRepo.getUserName();
-    userID = authRepo.getUserAddress();
-    email = authRepo.getUserType();
+    userAddress = authRepo.getUserAddress();
+    userType = authRepo.getUserType();
     phone = authRepo.getUserPhone();
-
     notifyListeners();
   }
 

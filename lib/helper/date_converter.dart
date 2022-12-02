@@ -43,9 +43,7 @@ class DateConverter {
   }
 
   static String dateFormatStyle2(DateTime dateTime) {
-    String date = DateFormat('dd-MMMM-yyyy').format(dateTime);
+    String date = DateFormat('dd-MMM-yy').format(dateTime);
     return date;
   }
-
-
 }

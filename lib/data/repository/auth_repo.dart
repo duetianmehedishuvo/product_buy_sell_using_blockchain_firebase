@@ -40,8 +40,8 @@ class AuthRepo {
     return sharedPreferences.getString(AppConstant.name) ?? "";
   }
 
-  String getUserType() {
-    return sharedPreferences.getString(AppConstant.userType) ?? "";
+  int getUserType() {
+    return sharedPreferences.getInt(AppConstant.userType) ?? 0;
   }
 
   String getUserPhone() {

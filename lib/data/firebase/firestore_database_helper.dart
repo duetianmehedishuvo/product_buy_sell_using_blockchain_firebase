@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:product_buy_sell/data/model/response/Product_model.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 
 const admin = 'admin';
 
 // reference
 const user = 'user';
+const products = 'products';
+const deliveryMan = 'Delivery-MAN';
 
 class FireStoreDatabaseHelper {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -42,6 +45,44 @@ class FireStoreDatabaseHelper {
   static Future<UserModels> getUserData(String phone) async {
     var snapshot = await db.collection(user).doc(phone).get();
     return UserModels.fromJson(snapshot.data());
+  }
+
+  // FOR PRODUCT Section
+  static Future<void> addProduct(ProductModel productModel) async {
+    return db.collection(products).doc(productModel.productId.toString()).set(productModel.toJson());
+  }
+
+  static Future<List<UserModels>> distributorsLists() async {
+    List<UserModels> data = [];
+    await FirebaseFirestore.instance.collection(user).get().then((value) {
+      for (var i in value.docs) {
+        if (i.data()['userType'] == 0) {
+          data.add(UserModels.fromJson(i.data()));
+        }
+      }
+    });
+    return data;
+  }
+
+  static Future<List<UserModels>> deliveryManLists() async {
+    List<UserModels> data = [];
+    await FirebaseFirestore.instance.collection(user).get().then((value) {
+      for (var i in value.docs) {
+        if (i.data()['userType'] == 1) {
+          data.add(UserModels.fromJson(i.data()));
+        }
+      }
+    });
+    return data;
+  }
+
+  static Future<void> assignProducts(String deliveryManID, String distributorsID, String productID) async {
+    return db
+        .collection(deliveryMan)
+        .doc(deliveryManID)
+        .collection(deliveryManID)
+        .doc(productID)
+        .set({'distributors_id': distributorsID, 'product_id': productID, 'status': 0});
   }
 
   // ///////////// *************** for question

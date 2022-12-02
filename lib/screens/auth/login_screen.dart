@@ -25,7 +25,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: colorBackground,
       body: Consumer<AuthProvider>(
@@ -86,14 +85,17 @@ class LoginScreen extends StatelessWidget {
                             : CustomButton(
                                 btnTxt: 'Login',
                                 onTap: () {
-                                  if(phoneController.text.isEmpty||passwordController.text.isEmpty){
-                                    showMessage(context,message: 'Please fill up all the fields');
-                                  }else{
-                                    authProvider.login(phoneController.text, passwordController.text, context).then((value){
-                                      if(value==true){
-                                        Helper.toRemoveUntilScreen(context, AdminDashboardScreen());
-                                      }else{
-
+                                  if (phoneController.text.isEmpty || passwordController.text.isEmpty) {
+                                    showMessage(context, message: 'Please fill up all the fields');
+                                  } else {
+                                    authProvider.login(phoneController.text, passwordController.text, context).then((value) {
+                                      if (value == 1) {
+                                        showMessage(context, message: 'Phone No and password don\'t match');
+                                      } else if (value == 0) {
+                                        showMessage(context, message: 'Login Successfully', isError: false);
+                                        Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
+                                      } else {
+                                        showMessage(context, message: 'Phone No not exists');
                                       }
                                     });
                                   }
