@@ -66,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      widget.isHideDistributorsInfo?SizedBox.shrink():
+                      widget.isHideDistributorsInfo?const SizedBox.shrink():
                       Container(
                         width: getAppSizeWidth(context),
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -137,18 +137,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget customRow(String title, String subTitle) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 3),
-      child: Row(
-        children: [
-          Text(title, style: sfProStyle500Medium.copyWith(fontSize: 15)),
-          const SizedBox(width: 10),
-          Expanded(child: Text(subTitle, style: sfProStyle400Regular.copyWith(fontSize: 17))),
-        ],
-      ),
-    );
-  }
+
 }
 
 Widget customRow1(String title, String subTitle) {
@@ -159,5 +148,17 @@ Widget customRow1(String title, String subTitle) {
       const SizedBox(width: 10),
       Expanded(child: Text(subTitle, style: sfProStyle500Medium.copyWith(fontSize: 17))),
     ],
+  );
+}
+Widget customRow(String title, String subTitle) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 3),
+    child: Row(
+      children: [
+        Text(title, style: sfProStyle500Medium.copyWith(fontSize: 15)),
+        const SizedBox(width: 10),
+        Expanded(child: Text(subTitle, style: sfProStyle400Regular.copyWith(fontSize: 17))),
+      ],
+    ),
   );
 }

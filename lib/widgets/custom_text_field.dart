@@ -40,8 +40,8 @@ class CustomTextField extends StatefulWidget {
   final bool? autoFocus;
   final bool? isSaveAutoFillData;
   final bool? isCancelShadow;
-  final String autoFillHints;
-  final String autoFillHints2;
+  final String? autoFillHints;
+  final String? autoFillHints2;
 
   const CustomTextField(
       {this.hintText = 'Write something...',
@@ -112,7 +112,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onEditingComplete: () {
           if (widget.isSaveAutoFillData!) TextInput.finishAutofillContext();
         },
-        autofillHints: [(widget.autoFillHints), (widget.autoFillHints2)],
+        autofillHints: [(widget.autoFillHints!), (widget.autoFillHints2!)],
         style: sfProStyle500Medium.copyWith(fontSize: 16, color: widget.textColor ?? AppColors.primaryColorLight),
         textInputAction: widget.inputAction,
         keyboardType: widget.inputType,

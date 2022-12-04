@@ -34,7 +34,7 @@ class _DeliveryManDetailsScreenState extends State<DeliveryManDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar("Product Details"),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 50,
         child: Consumer<AdminDashboardProvider>(
           builder: (context, dashboardProvider, child) => widget.productModel.status == 1 || widget.productModel.status == 2

@@ -96,6 +96,7 @@ class LoginScreen extends StatelessWidget {
 
                                         FireStoreDatabaseHelper.getUserData(phoneController.text).then((value) {
                                           authProvider.saveUserInformation(value);
+                                          Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                                           if (value.userType == 2) {
                                             Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
                                           } else if (value.userType == 1) {

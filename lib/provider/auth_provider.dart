@@ -46,6 +46,10 @@ class AuthProvider with ChangeNotifier {
 
   saveUserInformation(UserModels u) {
     userModels = u;
+    name = userModels.name!;
+    userAddress = userModels.address!;
+    userType = userModels.userType!;
+    phone = userModels.phone!;
     authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
     notifyListeners();
   }

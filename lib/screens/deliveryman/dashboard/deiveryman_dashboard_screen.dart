@@ -47,7 +47,7 @@ class _DeliveryDashboardScreenState extends State<DeliveryDashboardScreen> {
               onPressed: () {
                 Helper.toRemoveUntilScreen(context, LoginScreen());
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
         toolbarHeight: 60,
       ),

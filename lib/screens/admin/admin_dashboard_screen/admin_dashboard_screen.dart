@@ -32,7 +32,7 @@ class AdminDashboardScreen extends StatelessWidget {
               onPressed: () {
                 Helper.toRemoveUntilScreen(context, LoginScreen());
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: ListView(

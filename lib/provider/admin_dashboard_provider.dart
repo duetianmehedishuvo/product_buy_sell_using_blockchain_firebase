@@ -178,4 +178,16 @@ class AdminDashboardProvider with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> updateProducts2(int status, String productID) async {
+    _isLoading = true;
+    try {
+      await FireStoreDatabaseHelper.updateProductStatus(productID, status: status);
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

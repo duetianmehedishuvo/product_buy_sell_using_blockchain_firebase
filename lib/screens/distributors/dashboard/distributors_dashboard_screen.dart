@@ -8,7 +8,7 @@ import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
-import 'package:product_buy_sell/screens/deliveryman/dashboard/deliveryman_product_details_screen.dart';
+import 'package:product_buy_sell/screens/distributors/search/qr_search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
@@ -50,7 +50,7 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
               onPressed: () {
                 Helper.toRemoveUntilScreen(context, LoginScreen());
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
         toolbarHeight: 60,
       ),
@@ -65,7 +65,9 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
           const SizedBox(height: 15),
           CustomButton(
             btnTxt: 'SCAN PRODUCT',
-            onTap: () {},
+            onTap: () {
+              Helper.toScreen(context, const QRSearchScreen());
+            },
           ),
           const SizedBox(height: 15),
           CustomText(
@@ -155,7 +157,7 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
                                   ),
                                 ),
                               )
-                            : SizedBox.shrink();
+                            : const SizedBox.shrink();
                       },
                     );
                   }
