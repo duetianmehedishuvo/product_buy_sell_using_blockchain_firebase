@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-      title: 'Product Buy Sell',
+      title: 'SCM SYSTEM',
       theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
