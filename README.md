@@ -1,16 +1,4 @@
-# simple_islamic_note_2
+# Product Buy Sell using blockchain Firebase 
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## this is our schema diagram
+![317450812_449674597349770_2456936987306910553_n](https://user-images.githubusercontent.com/67133203/205509389-7b6c2c9e-c700-4a2b-ad08-307aeb81b3d6.jpg)
