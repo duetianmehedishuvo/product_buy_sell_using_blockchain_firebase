@@ -44,6 +44,8 @@ class SearchScreen extends StatelessWidget {
                         }
 
                         ProductModel productModel = ProductModel.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                        print('shuvo test ${decryptedText(productModel.distributorsID!)}');
+                        print('shuvo test 2 ${Provider.of<AuthProvider>(context, listen: false).phone}');
                         return decryptedText(productModel.distributorsID!) != Provider.of<AuthProvider>(context, listen: false).phone
                             ? Center(
                                 child: Column(

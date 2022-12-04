@@ -28,7 +28,7 @@ class _DeliveryDashboardScreenState extends State<DeliveryDashboardScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+    // Provider.of<AuthProvider>(context, listen: false).getUserInfo();
     Provider.of<AdminDashboardProvider>(context, listen: false).getDeliveryManProductInfo(widget.phone);
   }
 
