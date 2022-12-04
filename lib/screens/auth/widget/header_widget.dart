@@ -46,7 +46,7 @@ class HeaderWidget extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40)),
-              child: Text('WELCOME! USER', style: sfProStyle900Black.copyWith(color: colorPrimary))),
+              child: Text('WELCOME', style: sfProStyle900Black.copyWith(color: colorPrimary,fontSize: 16))),
           const SizedBox(height: 8),
           Center(child: CustomText(title: title, textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 18))),
           const SizedBox(height: 5),

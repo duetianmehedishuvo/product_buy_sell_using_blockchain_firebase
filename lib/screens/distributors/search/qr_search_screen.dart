@@ -43,7 +43,8 @@ class _QRViewExampleState extends State<QRSearchScreen> {
                           } else {
                             showMessage(context, message: 'Not Found');
                           }
-                          Helper.toScreen(context, SearchScreen(code));
+                          cameraController.dispose();
+                          Helper.toReplacementScreenSlideLeftToRight(context, SearchScreen(code));
                           //Products_ EHgoqXWwxiEf4/WKWxwIB4GHbwMBfeXu
                           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SearchScreen(qrSearchData: code)));
                         }

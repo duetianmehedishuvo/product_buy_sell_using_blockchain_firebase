@@ -34,18 +34,19 @@ class SearchScreen extends StatelessWidget {
                           .doc(decryptedText(searchResult.replaceAll('Products_ ', "")))
                           .snapshots(),
                       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (!snapshot.hasData) {
+                        if (!snapshot.hasData || snapshot.data!.data() == null) {
                           return Center(
                               child: Text(
-                            "Sorry, there is no data in this QR CODE if think any doubt please complain here",
+                            "Sorry, there is no data in this Product Search",
                             textAlign: TextAlign.center,
                             style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
                           ));
                         }
 
+                        // print('kkaa ${snapshot.data!.data()}');
                         ProductModel productModel = ProductModel.fromJson(snapshot.data!.data() as Map<String, dynamic>);
-                        print('shuvo test ${decryptedText(productModel.distributorsID!)}');
-                        print('shuvo test 2 ${Provider.of<AuthProvider>(context, listen: false).phone}');
+                        // print('shuvo test ${decryptedText(productModel.distributorsID!)}');
+                        // print('shuvo test 2 ${Provider.of<AuthProvider>(context, listen: false).phone}');
                         return decryptedText(productModel.distributorsID!) != Provider.of<AuthProvider>(context, listen: false).phone
                             ? Center(
                                 child: Column(
@@ -146,7 +147,6 @@ class SearchScreen extends StatelessWidget {
                                                 dashboardProvider.updateProducts2(3, productModel.productId!.toString()).then((value) {
                                                   if (value == true) {
                                                     showMessage(context, message: 'Order confirm successfully', isError: false);
-                                                    Navigator.of(context).pop();
                                                     Navigator.of(context).pop();
                                                   } else {
                                                     showMessage(context, message: 'Order confirm Failed');
