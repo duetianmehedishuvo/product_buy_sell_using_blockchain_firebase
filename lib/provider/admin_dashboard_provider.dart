@@ -156,6 +156,17 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  ProductModel productModel = ProductModel();
+  bool isLoadingProduct = false;
+
+  void getProducts(String productID) async {
+    isLoadingProduct = true;
+    productModel = ProductModel();
+    productModel = await FireStoreDatabaseHelper.getProduct(productID);
+    isLoadingProduct = false;
+    notifyListeners();
+  }
+
   List<ProductModel> products = [];
 
   void getDeliveryManProductInfo(String deliveryManID) async {
@@ -197,7 +208,7 @@ class AdminDashboardProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     FireStoreDatabaseHelper.addReports(reportModels);
-    showMessage(context, message: 'Report added successfully' ,isError: false);
+    showMessage(context, message: 'Report added successfully', isError: false);
     _isLoading = false;
     notifyListeners();
     return true;

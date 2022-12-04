@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/model/response/report_models.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
+import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
 import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text_field.dart';
@@ -30,6 +31,7 @@ class AddReportsScreen extends StatelessWidget {
                               reportID: DateTime.now().microsecondsSinceEpoch.toString(),
                               productID: productID,
                               description: encryptedText(titleReportController.text),
+                              userID: Provider.of<AuthProvider>(context,listen: false).phone,
                               status: 0);
 
                           adminDashboardProvider.addReport(reportModels, context).then((value) {

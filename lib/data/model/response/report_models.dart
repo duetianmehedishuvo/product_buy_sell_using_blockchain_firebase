@@ -3,6 +3,7 @@ class ReportModels {
     this.reportID,
     this.productID,
     this.description,
+    this.userID,
     this.status,
   });
 
@@ -10,11 +11,13 @@ class ReportModels {
     reportID = json['reportID'];
     productID = json['productID'];
     description = json['description'];
+    userID = json['userID'];
     status = json['status'];
   }
 
   String? reportID;
   String? productID;
+  String? userID;
   String? description;
   int? status;
 
@@ -22,6 +25,7 @@ class ReportModels {
     final map = <String, dynamic>{};
     map['reportID'] = reportID;
     map['productID'] = productID;
+    map['userID'] = userID;
     map['description'] = description;
     map['status'] = status;
     return map;

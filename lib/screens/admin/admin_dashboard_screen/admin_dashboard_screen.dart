@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:product_buy_sell/screens/admin/delivery_man/deleveryman_screen.dart';
 import 'package:product_buy_sell/screens/admin/distributors/distributors_screen.dart';
 import 'package:product_buy_sell/screens/admin/product/product_screen.dart';
+import 'package:product_buy_sell/screens/admin/reports/reports_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
@@ -77,7 +78,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 Expanded(
                     child: InkWell(
                   onTap: () {
-                    // Helper.toScreen(context, const AllCustomerDateWiseScreen());
+                    Helper.toScreen(context, const ReportScreen());
                   },
                   child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Report'),
                 )),
