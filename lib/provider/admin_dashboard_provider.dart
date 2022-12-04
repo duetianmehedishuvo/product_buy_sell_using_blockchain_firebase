@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/product_model.dart';
+import 'package:product_buy_sell/data/model/response/report_models.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/data/repository/admin_dashboard_repo.dart';
 import 'package:product_buy_sell/helper/date_converter.dart';
@@ -183,6 +184,29 @@ class AdminDashboardProvider with ChangeNotifier {
     _isLoading = true;
     try {
       await FireStoreDatabaseHelper.updateProductStatus(productID, status: status);
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //TODO:: for Report Section
+  Future<bool> addReport(ReportModels reportModels, BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    FireStoreDatabaseHelper.addReports(reportModels);
+    showMessage(context, message: 'Report added successfully' ,isError: false);
+    _isLoading = false;
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> updateReportStatus(int status, String productID) async {
+    _isLoading = true;
+    try {
+      await FireStoreDatabaseHelper.updateReports(productID, status: status);
       _isLoading = false;
       notifyListeners();
       return true;

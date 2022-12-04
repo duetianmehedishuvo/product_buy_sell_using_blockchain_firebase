@@ -7,6 +7,7 @@ import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
+import 'package:product_buy_sell/screens/distributors/reports/add_reports_screen.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -46,7 +47,7 @@ class SearchScreen extends StatelessWidget {
                         return decryptedText(productModel.distributorsID!) != Provider.of<AuthProvider>(context, listen: false).phone
                             ? Center(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     "This Product is Not yours please contact with admin",
@@ -56,8 +57,12 @@ class SearchScreen extends StatelessWidget {
                                   const SizedBox(height: 30),
                                   SizedBox(
                                       width: 200,
-                                      child: CustomButton(btnTxt: 'Report this products',onTap: (){},))
-                                  
+                                      child: CustomButton(
+                                          btnTxt: 'Report this products',
+                                          onTap: () {
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                                builder: (_) => AddReportsScreen(searchResult.replaceAll('Products_ ', ""))));
+                                          }))
                                 ],
                               ))
                             : ListView(
