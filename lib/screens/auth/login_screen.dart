@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/helper/open_call_url_map_sms_helper.dart';
+import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/admin_dashboard_screen/admin_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
 import 'package:product_buy_sell/screens/deliveryman/dashboard/deiveryman_dashboard_screen.dart';
+import 'package:product_buy_sell/screens/distributors/dashboard/distributors_dashboard_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
-import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -93,29 +93,22 @@ class LoginScreen extends StatelessWidget {
                                         showMessage(context, message: 'Phone No and password don\'t match');
                                       } else if (value == 0) {
                                         showMessage(context, message: 'Login Successfully', isError: false);
-                                        authProvider.getUserInfo();
-                                        if (authProvider.userType == 2) {
-                                          Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
-                                        } else {
-                                          Helper.toRemoveUntilScreen(context, const DeliveryDashboardScreen());
-                                        }
+
+                                        FireStoreDatabaseHelper.getUserData(phoneController.text).then((value) {
+                                          authProvider.saveUserInformation(value);
+                                          if (value.userType == 2) {
+                                            Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
+                                          } else if (value.userType == 1) {
+                                            Helper.toRemoveUntilScreen(context,  DeliveryDashboardScreen(phoneController.text));
+                                          } else {
+                                            Helper.toRemoveUntilScreen(context,  DistributorsDashboardScreen(phoneController.text));
+                                          }
+                                        });
                                       } else {
                                         showMessage(context, message: 'Phone No not exists');
                                       }
                                     });
                                   }
-                                  // authProvider.signIn(phoneController.text, passwordController.text).then((value) {
-                                  //   if (value.status == true) {
-                                  //     showMessage(context, message: value.message, isError: false);
-                                  //     if (authProvider.isAdmin == false) {
-                                  //       Helper.toScreen(context, const DashboardScreen());
-                                  //     } else {
-                                  //       Helper.toScreen(context, const AdminDashboardScreen());
-                                  //     }
-                                  //   } else {
-                                  //     showMessage(context, message: value.message);
-                                  //   }
-                                  // });
                                 }),
                         const SizedBox(height: 20),
                         CustomText(

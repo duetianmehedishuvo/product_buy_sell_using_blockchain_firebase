@@ -12,8 +12,9 @@ import 'package:screenshot/screenshot.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final ProductModel productModel;
+  final bool isHideDistributorsInfo;
 
-  const ProductDetailsScreen(this.productModel, {Key? key}) : super(key: key);
+  const ProductDetailsScreen(this.productModel, {this.isHideDistributorsInfo = false, Key? key}) : super(key: key);
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -65,6 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      widget.isHideDistributorsInfo?SizedBox.shrink():
                       Container(
                         width: getAppSizeWidth(context),
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -88,7 +90,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: widget.isHideDistributorsInfo?0:15),
                       Container(
                         width: getAppSizeWidth(context),
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -114,9 +116,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       )
                     ],
                   ),
-
             const SizedBox(height: 15),
-
             SizedBox(
               height: 200,
               child: Screenshot(
@@ -137,7 +137,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-
   Widget customRow(String title, String subTitle) {
     return Container(
       margin: const EdgeInsets.only(bottom: 3),
@@ -151,6 +150,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 }
+
 Widget customRow1(String title, String subTitle) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,

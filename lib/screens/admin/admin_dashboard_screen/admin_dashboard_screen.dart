@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:product_buy_sell/screens/admin/delivery_man/deleveryman_screen.dart';
 import 'package:product_buy_sell/screens/admin/distributors/distributors_screen.dart';
 import 'package:product_buy_sell/screens/admin/product/product_screen.dart';
+import 'package:product_buy_sell/screens/auth/login_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
@@ -26,6 +27,13 @@ class AdminDashboardScreen extends StatelessWidget {
           child: Container(alignment: Alignment.center, child: SvgPicture.asset(ImagesModel.menuIcons, width: 25, height: 20)),
         ),
         toolbarHeight: 60,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Helper.toRemoveUntilScreen(context, LoginScreen());
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),

@@ -44,6 +44,12 @@ class AuthProvider with ChangeNotifier {
 
   UserModels userModels = UserModels();
 
+  saveUserInformation(UserModels u) {
+    userModels = u;
+    authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
+    notifyListeners();
+  }
+
   Future<int> login(String phone, String password, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
@@ -56,11 +62,6 @@ class AuthProvider with ChangeNotifier {
     if (value == 1) {
       return 1;
     } else if (value == 0) {
-      userModels = await FireStoreDatabaseHelper.getUserData(phone);
-      userType = userModels.userType!;
-      authRepo.saveUserInformation(userModels.address!, userModels.name!, userModels.phone!, userModels.userType!);
-      Timer(Duration(seconds: 4), () {});
-      notifyListeners();
       return 0;
     } else {
       return -1;

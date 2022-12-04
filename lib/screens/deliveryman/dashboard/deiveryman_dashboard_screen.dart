@@ -15,7 +15,9 @@ import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
 class DeliveryDashboardScreen extends StatefulWidget {
-  const DeliveryDashboardScreen({Key? key}) : super(key: key);
+  final String phone;
+
+  const DeliveryDashboardScreen(this.phone, {Key? key}) : super(key: key);
 
   @override
   State<DeliveryDashboardScreen> createState() => _DeliveryDashboardScreenState();
@@ -26,13 +28,12 @@ class _DeliveryDashboardScreenState extends State<DeliveryDashboardScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AdminDashboardProvider>(context, listen: false)
-        .getDeliveryManProductInfo(Provider.of<AuthProvider>(context, listen: false).phone);
+    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+    Provider.of<AdminDashboardProvider>(context, listen: false).getDeliveryManProductInfo(widget.phone);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: colorBackground,
       appBar: AppBar(
