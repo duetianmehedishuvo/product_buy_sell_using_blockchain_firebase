@@ -112,14 +112,14 @@ class _DeliveryManDetailsScreenState extends State<DeliveryManDetailsScreen> {
                       const SizedBox(height: 15),
                     ],
                   ),
-            const SizedBox(height: 15),
-            SizedBox(
-              height: 200,
-              child: Screenshot(
-                controller: dashboardProvider.screenshotController,
-                child: dashboardProvider.qrCodeWidget(),
-              ),
-            ),
+            // const SizedBox(height: 15),
+            // SizedBox(
+            //   height: 200,
+            //   child: Screenshot(
+            //     controller: dashboardProvider.screenshotController,
+            //     child: dashboardProvider.qrCodeWidget(),
+            //   ),
+            // ),
             const SizedBox(height: 20),
           ],
         ),
