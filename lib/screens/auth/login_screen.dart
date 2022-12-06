@@ -6,6 +6,7 @@ import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
 import 'package:product_buy_sell/screens/govt/dashboard/govt_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/distributors/dashboard/distributors_dashboard_screen.dart';
+import 'package:product_buy_sell/screens/retailers/dashboard/retailers_dashboard_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
@@ -101,10 +102,12 @@ class LoginScreen extends StatelessWidget {
                                             Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
                                           } else if (value.userType == 0) {
                                             Helper.toRemoveUntilScreen(context, const GovtDashboardScreen());
-                                          }  else if (value.userType == 2) {
-                                            Helper.toRemoveUntilScreen(context, const DistributorsDashboardScreen());
+                                          } else if (value.userType == 2) {
+                                            Helper.toRemoveUntilScreen(context, DistributorsDashboardScreen(phoneController.text));
+                                          } else if (value.userType == 3) {
+                                            Helper.toRemoveUntilScreen(context, const RetailersDashboardScreen());
                                           } else {
-                                            Helper.toRemoveUntilScreen(context, const DistributorsDashboardScreen());
+                                            Helper.toRemoveUntilScreen(context, const RetailersDashboardScreen());
                                           }
                                         });
                                       } else {

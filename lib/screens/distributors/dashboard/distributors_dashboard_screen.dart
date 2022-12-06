@@ -4,23 +4,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
-import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
 import 'package:product_buy_sell/screens/distributors/product/distributors_product_details_screen.dart';
-import 'package:product_buy_sell/screens/distributors/search/qr_search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
-import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
 class DistributorsDashboardScreen extends StatelessWidget {
-  const DistributorsDashboardScreen({super.key});
-
+  const DistributorsDashboardScreen(this.phone,{super.key});
+  final String phone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

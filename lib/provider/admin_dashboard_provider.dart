@@ -242,6 +242,17 @@ class AdminDashboardProvider with ChangeNotifier {
       return false;
     }
   }
+  Future<bool> verifiedByRetailerProduct() async {
+    _isLoading = true;
+    try {
+      await FireStoreDatabaseHelper.verifiedByRetailerProduct(productID.toString());
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   Future<bool> updateProducts2(int status, String productID) async {
     _isLoading = true;

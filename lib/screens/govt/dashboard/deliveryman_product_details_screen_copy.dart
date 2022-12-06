@@ -9,7 +9,6 @@ import 'package:product_buy_sell/widgets/custom_app_bar.dart';
 import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
-import 'package:screenshot/screenshot.dart';
 
 class DeliveryManDetailsScreen extends StatefulWidget {
   final ProductModel productModel;

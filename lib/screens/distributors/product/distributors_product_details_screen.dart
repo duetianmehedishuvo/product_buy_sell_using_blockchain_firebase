@@ -13,7 +13,6 @@ import 'package:product_buy_sell/widgets/custom_app_bar.dart';
 import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
-import 'package:screenshot/screenshot.dart';
 
 class DistributorsProductDetailsScreen extends StatefulWidget {
   final ProductModel productModel;
@@ -101,7 +100,7 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
                             dashboardProvider.changeRetailers(newValue!);
                           },
                         ),
-                        SizedBox(height: 13),
+                        const SizedBox(height: 13),
                         SizedBox(
                             width: 170,
                             child: CustomButton(
@@ -119,7 +118,7 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
                 : StreamBuilder(
                     stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.retailerID!)).snapshots(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (!snapshot.hasData || !snapshot.hasData == null) {
+                      if (!snapshot.hasData) {
                         return Center(
                             child: Text(
                           "Retailers Not Found",

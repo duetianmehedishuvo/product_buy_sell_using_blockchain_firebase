@@ -8,7 +8,7 @@ import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
-import 'package:product_buy_sell/screens/distributors/search/qr_search_screen.dart';
+import 'package:product_buy_sell/screens/customer/search/qr_search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';

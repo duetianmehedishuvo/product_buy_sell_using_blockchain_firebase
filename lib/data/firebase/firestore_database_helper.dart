@@ -125,7 +125,14 @@ class FireStoreDatabaseHelper {
   }
 
   static Future<void> assignProductOnRetailers(String retailersID, String productID) async {
-    db.collection(products).doc(productID).update({"retailerID": encryptedText(retailersID), "distributorsVerifiedStatus": true, "isAssignRetailer": true});
+    db
+        .collection(products)
+        .doc(productID)
+        .update({"retailerID": encryptedText(retailersID), "distributorsVerifiedStatus": true, "isAssignRetailer": true});
+  }
+
+  static Future<void> verifiedByRetailerProduct(String productID) async {
+    db.collection(products).doc(productID).update({"retailerVerifiedStatus": true});
   }
 
   // TODO: for Report

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:product_buy_sell/screens/distributors/search/search_screen.dart';
+import 'package:product_buy_sell/screens/customer/search/search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
 import 'package:product_buy_sell/widgets/snackbar_message.dart';

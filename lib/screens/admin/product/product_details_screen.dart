@@ -71,57 +71,103 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Divider(color: Colors.black.withOpacity(.1)),
             const SizedBox(height: 15),
 
-            widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignDistributor == false
-                ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                        ],
-                        borderRadius: BorderRadius.circular(7)),
-                    child: Column(
-                      children: [
-                        CustomText(
-                            title: 'Select Distributors:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-                        DropdownButton(
-                          value: dashboardProvider.selectDistributors,
-                          isExpanded: true,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: dashboardProvider.distributorsLists.map((UserModels items) {
-                            return DropdownMenuItem(
-                                value: items,
-                                child: CustomText(
-                                    title: '${items.name!} -(${items.phone})',
-                                    color: Colors.black,
-                                    textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
-                          }).toList(),
-                          onChanged: (UserModels? newValue) {
-                            dashboardProvider.changeDistributors(newValue!);
-                          },
+            widget.productModel.govtVerifiedStatus == false
+                ? const SizedBox.shrink()
+                : widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignDistributor == false
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                            ],
+                            borderRadius: BorderRadius.circular(7)),
+                        child: Column(
+                          children: [
+                            CustomText(
+                                title: 'Select Distributors:',
+                                textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                            DropdownButton(
+                              value: dashboardProvider.selectDistributors,
+                              isExpanded: true,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: dashboardProvider.distributorsLists.map((UserModels items) {
+                                return DropdownMenuItem(
+                                    value: items,
+                                    child: CustomText(
+                                        title: '${items.name!} -(${items.phone})',
+                                        color: Colors.black,
+                                        textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
+                              }).toList(),
+                              onChanged: (UserModels? newValue) {
+                                dashboardProvider.changeDistributors(newValue!);
+                              },
+                            ),
+                            const SizedBox(height: 13),
+                            SizedBox(
+                                width: 120,
+                                child: CustomButton(
+                                    btnTxt: 'Assign',
+                                    onTap: () {
+                                      dashboardProvider.assignProductOnDistributors(context).then((value) {
+                                        if (value == true) {
+                                          Navigator.of(context).pop();
+                                        }
+                                      });
+                                    }))
+                          ],
                         ),
-                        SizedBox(height: 13),
-                        Container(
-                            width: 120,
-                            child: CustomButton(
-                                btnTxt: 'Assign',
-                                onTap: () {
-                                  dashboardProvider.assignProductOnDistributors(context).then((value) {
-                                    if (value == true) {
-                                      Navigator.of(context).pop();
-                                    }
-                                  });
-                                }))
-                      ],
-                    ),
-                  )
-                : StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.distributorsID!)).snapshots(),
+                      )
+                    : StreamBuilder(
+                        stream:
+                            FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.distributorsID!)).snapshots(),
+                        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                                child: Text(
+                              "Distributors Not Found",
+                              textAlign: TextAlign.center,
+                              style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
+                            ));
+                          }
+                          UserModels deliveryManModels = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                          return Container(
+                            width: getAppSizeWidth(context),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(.2),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 3.0,
+                                      offset: const Offset(0.0, 0.0))
+                                ],
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    title: 'Distributors DETAILS:',
+                                    textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                                Divider(color: Colors.red.withOpacity(.3)),
+                                customRow('ID:', deliveryManModels.phone!),
+                                customRow('NAME:', deliveryManModels.name!),
+                                customRow('ADDRESS:', deliveryManModels.address!),
+                              ],
+                            ),
+                          );
+                        }),
+            SizedBox(height: widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignRetailer == true ? 15 : 0),
+            widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignRetailer == true
+                ? StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.retailerID!)).snapshots(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (!snapshot.hasData || !snapshot.hasData == null) {
+                      if (!snapshot.hasData) {
                         return Center(
                             child: Text(
-                          "Distributors Not Found",
+                          "Retailers Not Found",
                           textAlign: TextAlign.center,
                           style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
                         ));
@@ -141,8 +187,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                                title: 'Distributors DETAILS:',
-                                textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                                title: 'Retailers DETAILS:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
                             Divider(color: Colors.red.withOpacity(.3)),
                             customRow('ID:', deliveryManModels.phone!),
                             customRow('NAME:', deliveryManModels.name!),
@@ -150,88 +195,30 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ],
                         ),
                       );
-                    }),
+                    })
+                : const SizedBox.shrink(),
 
-            // dashboardProvider.isLoading
-            //     ? const Center(child: CircularProgressIndicator())
-            //     : Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           widget.isHideDistributorsInfo
-            //               ? const SizedBox.shrink()
-            //               : Container(
-            //                   width: getAppSizeWidth(context),
-            //                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //                   decoration: BoxDecoration(
-            //                       color: Colors.white,
-            //                       boxShadow: [
-            //                         BoxShadow(
-            //                             color: Colors.grey.withOpacity(.2),
-            //                             blurRadius: 10.0,
-            //                             spreadRadius: 3.0,
-            //                             offset: const Offset(0.0, 0.0))
-            //                       ],
-            //                       borderRadius: BorderRadius.circular(10)),
-            //                   child: Column(
-            //                     crossAxisAlignment: CrossAxisAlignment.start,
-            //                     children: [
-            //                       CustomText(
-            //                           title: 'DISTRIBUTORS DETAILS:',
-            //                           textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-            //                       Divider(color: Colors.red.withOpacity(.3)),
-            //                       customRow('ID:', dashboardProvider.distributorsModels.phone!),
-            //                       customRow('NAME:', dashboardProvider.distributorsModels.name!),
-            //                       customRow('ADDRESS:', dashboardProvider.distributorsModels.address!),
-            //                     ],
-            //                   ),
-            //                 ),
-            //           SizedBox(height: widget.isHideDistributorsInfo ? 0 : 15),
-            //           Container(
-            //             width: getAppSizeWidth(context),
-            //             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //             decoration: BoxDecoration(
-            //                 color: Colors.white,
-            //                 boxShadow: [
-            //                   BoxShadow(
-            //                       color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-            //                 ],
-            //                 borderRadius: BorderRadius.circular(10)),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 CustomText(
-            //                     title: 'DELIVERY MAN DETAILS:',
-            //                     textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-            //                 Divider(color: Colors.red.withOpacity(.3)),
-            //                 customRow('ID:', dashboardProvider.deliveryManModels.phone!),
-            //                 customRow('NAME:', dashboardProvider.deliveryManModels.name!),
-            //                 customRow('ADDRESS:', dashboardProvider.deliveryManModels.address!),
-            //               ],
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            // const SizedBox(height: 15),
-            // widget.isHideDistributorsInfo
-            //     ? const SizedBox.shrink()
-            //     : Column(
-            //         children: [
-            //           SizedBox(
-            //             height: 200,
-            //             child: Screenshot(
-            //               controller: dashboardProvider.screenshotController,
-            //               child: dashboardProvider.qrCodeWidget(),
-            //             ),
-            //           ),
-            //           const SizedBox(height: 20),
-            //           CustomButton(
-            //             btnTxt: 'SAVE QR',
-            //             onTap: () {
-            //               dashboardProvider.captureScreenshot();
-            //             },
-            //           ),
-            //         ],
-            //       ),
+            const SizedBox(height: 15),
+            widget.isHideDistributorsInfo
+                ? const SizedBox.shrink()
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        child: Screenshot(
+                          controller: dashboardProvider.screenshotController,
+                          child: dashboardProvider.qrCodeWidget(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        btnTxt: 'SAVE QR',
+                        onTap: () {
+                          dashboardProvider.captureScreenshot();
+                        },
+                      ),
+                    ],
+                  ),
           ],
         ),
       ),
