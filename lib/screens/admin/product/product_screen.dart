@@ -86,10 +86,9 @@ class ProductScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 3),
                                   CustomText(
-                                    title: 'MANUFACTURE DATE: ${decryptedText(products.manufacturerDate!)}',
-                                    color: Colors.black87,
-                                    textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14),
-                                  ),
+                                      title: 'MANUFACTURE DATE: ${decryptedText(products.manufacturerDate!)}',
+                                      color: Colors.black87,
+                                      textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14)),
                                   const SizedBox(height: 3),
                                   customRow2('Government Verified:', products.govtVerifiedStatus!),
                                   const SizedBox(height: 3),

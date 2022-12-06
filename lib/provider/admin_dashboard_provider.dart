@@ -96,6 +96,7 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
   //TODO:: for assignProductOnRetailers
   Future<bool> assignProductOnRetailers(BuildContext context) async {
     _isLoading = true;
@@ -218,18 +219,18 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> updateProducts(int index, int status) async {
-    _isLoading = true;
-    try {
-      await FireStoreDatabaseHelper.updateProductStatus(productID.toString(), status: status);
-      products[index].status = status;
-      _isLoading = false;
-      notifyListeners();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+  // Future<bool> updateProducts(int index, int status) async {
+  //   _isLoading = true;
+  //   try {
+  //     await FireStoreDatabaseHelper.updateProductStatus(productID.toString(), status: status);
+  //     products[index].status = status;
+  //     _isLoading = false;
+  //     notifyListeners();
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 
   Future<bool> verifiedByGovernmentProduct() async {
     _isLoading = true;
@@ -242,6 +243,7 @@ class AdminDashboardProvider with ChangeNotifier {
       return false;
     }
   }
+
   Future<bool> verifiedByRetailerProduct() async {
     _isLoading = true;
     try {
@@ -254,10 +256,10 @@ class AdminDashboardProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProducts2(int status, String productID) async {
+  Future<bool> confirmProduct(String productID, String customerID) async {
     _isLoading = true;
     try {
-      await FireStoreDatabaseHelper.updateProductStatus(productID, status: status);
+      await FireStoreDatabaseHelper.confirmProduct(productID, customerID);
       _isLoading = false;
       notifyListeners();
       return true;

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/firebase/firestore_database_helper.dart';
 import 'package:product_buy_sell/data/model/response/report_models.dart';
-import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/screens/admin/reports/report_details_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
@@ -63,7 +62,7 @@ class ReportScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                      title: 'Product ID: ${decryptedText(reportModels.productID!)}',
+                                      title: 'Product ID: ${reportModels.productID!}',
                                       color: Colors.black,
                                       textStyle: sfProStyle700Bold.copyWith(fontSize: 16)),
                                   const SizedBox(height: 3),

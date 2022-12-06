@@ -18,7 +18,6 @@ class _QRViewExampleState extends State<QRSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Env.themeColors['barColor'],
       appBar: buildAppBar('QR Search'),
       body: Stack(
         children: <Widget>[
@@ -45,16 +44,9 @@ class _QRViewExampleState extends State<QRSearchScreen> {
                           }
                           cameraController.dispose();
                           Helper.toReplacementScreenSlideLeftToRight(context, SearchScreen(code));
-                          //Products_ EHgoqXWwxiEf4/WKWxwIB4GHbwMBfeXu
-                          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SearchScreen(qrSearchData: code)));
                         }
                       })
-                  // QRView(
-                  //     key: qrKey,
-                  //     onQRViewCreated: (controller) {
-                  //       Provider.of<SearchProvider>(context, listen: false).onQRViewCreated(controller, context);
-                  //     },
-                  //     overlay: QrScannerOverlayShape())
+
                   )),
           Positioned(
             right: 0,

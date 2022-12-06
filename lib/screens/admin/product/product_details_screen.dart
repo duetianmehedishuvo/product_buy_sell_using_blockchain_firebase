@@ -35,9 +35,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         widget.productModel.retailerVerifiedStatus == false) {
       Provider.of<AdminDashboardProvider>(context, listen: false).getAllData();
     }
-
-    Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.retailerID!),
-        decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
+    Provider.of<AdminDashboardProvider>(context, listen: false).updateProductID(widget.productModel.productId!);
+    //
+    // Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.retailerID!),
+    //     decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
   }
 
   @override
@@ -70,8 +71,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             customRow3('Sell Status:', widget.productModel.status! == 0 ? "No" : "YES"),
             Divider(color: Colors.black.withOpacity(.1)),
             const SizedBox(height: 15),
-
-            widget.productModel.govtVerifiedStatus == false
+            widget.productModel.govtVerifiedStatus == false || widget.productModel.status != 0
                 ? const SizedBox.shrink()
                 : widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignDistributor == false
                     ? Container(
@@ -131,7 +131,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
                             ));
                           }
-                          UserModels deliveryManModels = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                          UserModels distributors = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
                           return Container(
                             width: getAppSizeWidth(context),
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -152,9 +152,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     title: 'Distributors DETAILS:',
                                     textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
                                 Divider(color: Colors.red.withOpacity(.3)),
-                                customRow('ID:', deliveryManModels.phone!),
-                                customRow('NAME:', deliveryManModels.name!),
-                                customRow('ADDRESS:', deliveryManModels.address!),
+                                customRow('ID:', distributors.phone!),
+                                customRow('NAME:', distributors.name!),
+                                customRow('ADDRESS:', distributors.address!),
                               ],
                             ),
                           );
@@ -166,13 +166,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (!snapshot.hasData) {
                         return Center(
-                            child: Text(
-                          "Retailers Not Found",
-                          textAlign: TextAlign.center,
-                          style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
-                        ));
+                            child: Text("Retailers Not Found",
+                                textAlign: TextAlign.center, style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16)));
                       }
-                      UserModels deliveryManModels = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                      UserModels retailer = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
                       return Container(
                         width: getAppSizeWidth(context),
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -189,15 +186,49 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             CustomText(
                                 title: 'Retailers DETAILS:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
                             Divider(color: Colors.red.withOpacity(.3)),
-                            customRow('ID:', deliveryManModels.phone!),
-                            customRow('NAME:', deliveryManModels.name!),
-                            customRow('ADDRESS:', deliveryManModels.address!),
+                            customRow('ID:', retailer.phone!),
+                            customRow('NAME:', retailer.name!),
+                            customRow('ADDRESS:', retailer.address!),
                           ],
                         ),
                       );
                     })
                 : const SizedBox.shrink(),
-
+            SizedBox(height: widget.productModel.status != 0 && widget.isHideDistributorsInfo == false ? 15 : 0),
+            widget.productModel.status != 0 && widget.isHideDistributorsInfo == false
+                ? StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection(user).doc(widget.productModel.customerID!).snapshots(),
+                    builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Text("Customer Not Found",
+                                textAlign: TextAlign.center, style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16)));
+                      }
+                      UserModels customer = UserModels.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                      return Container(
+                        width: getAppSizeWidth(context),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                            ],
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                                title: 'Customer DETAILS:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                            Divider(color: Colors.red.withOpacity(.3)),
+                            customRow('ID:', customer.phone!),
+                            customRow('NAME:', customer.name!),
+                            customRow('ADDRESS:', customer.address!),
+                          ],
+                        ),
+                      );
+                    })
+                : const SizedBox.shrink(),
             const SizedBox(height: 15),
             widget.isHideDistributorsInfo
                 ? const SizedBox.shrink()

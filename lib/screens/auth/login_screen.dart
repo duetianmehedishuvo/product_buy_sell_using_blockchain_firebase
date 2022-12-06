@@ -4,6 +4,7 @@ import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/admin_dashboard_screen/admin_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
+import 'package:product_buy_sell/screens/customer/dashboard/customers_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/govt/dashboard/govt_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/distributors/dashboard/distributors_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/retailers/dashboard/retailers_dashboard_screen.dart';
@@ -97,17 +98,17 @@ class LoginScreen extends StatelessWidget {
 
                                         FireStoreDatabaseHelper.getUserData(phoneController.text).then((value) {
                                           authProvider.saveUserInformation(value);
-                                          // Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                                          if (value.userType == 1) {
-                                            Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
-                                          } else if (value.userType == 0) {
+
+                                          if (value.userType == 0) {
                                             Helper.toRemoveUntilScreen(context, const GovtDashboardScreen());
+                                          } else if (value.userType == 1) {
+                                            Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
                                           } else if (value.userType == 2) {
                                             Helper.toRemoveUntilScreen(context, DistributorsDashboardScreen(phoneController.text));
                                           } else if (value.userType == 3) {
                                             Helper.toRemoveUntilScreen(context, const RetailersDashboardScreen());
                                           } else {
-                                            Helper.toRemoveUntilScreen(context, const RetailersDashboardScreen());
+                                            Helper.toRemoveUntilScreen(context, CustomersDashboardScreen(phoneController.text));
                                           }
                                         });
                                       } else {

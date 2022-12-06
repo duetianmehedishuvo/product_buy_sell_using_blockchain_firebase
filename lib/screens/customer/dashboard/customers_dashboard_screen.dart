@@ -17,16 +17,16 @@ import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
-class DistributorsDashboardScreen extends StatefulWidget {
+class CustomersDashboardScreen extends StatefulWidget {
   final String phone;
 
-  const DistributorsDashboardScreen(this.phone, {Key? key}) : super(key: key);
+  const CustomersDashboardScreen(this.phone, {Key? key}) : super(key: key);
 
   @override
-  State<DistributorsDashboardScreen> createState() => _DistributorsDashboardScreenState();
+  State<CustomersDashboardScreen> createState() => _CustomersDashboardScreenState();
 }
 
-class _DistributorsDashboardScreenState extends State<DistributorsDashboardScreen> {
+class _CustomersDashboardScreenState extends State<CustomersDashboardScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -40,7 +40,7 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
     return Scaffold(
       backgroundColor: colorBackground,
       appBar: AppBar(
-        title: CustomText(title: 'Distributors Dashboard', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+        title: CustomText(title: 'Customer Dashboard', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
         backgroundColor: colorPrimary,
         centerTitle: true,
         elevation: 0,
@@ -82,11 +82,7 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
                   return const Center(child: CircularProgressIndicator());
                 } else {
                   if (snapshots.data!.docs.isEmpty) {
-                    return Center(
-                        child: Text(
-                      'No data available',
-                      style: sfProStyle600SemiBold.copyWith(fontSize: 16),
-                    ));
+                    return Center(child: Text('No data available', style: sfProStyle600SemiBold.copyWith(fontSize: 16)));
                   } else {
                     return ListView.builder(
                       itemCount: snapshots.data!.docs.length,
@@ -96,7 +92,7 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
                       itemBuilder: (context, index) {
                         ProductModel products = ProductModel.fromJson(snapshots.data!.docs[index].data() as Map<String, dynamic>);
 
-                        return (decryptedText(products.distributorsID!) == widget.phone)
+                        return (products.customerID == widget.phone)
                             ? InkWell(
                                 onTap: () {
                                   Helper.toScreen(context, ProductDetailsScreen(products, isHideDistributorsInfo: true));
@@ -132,27 +128,21 @@ class _DistributorsDashboardScreenState extends State<DistributorsDashboardScree
                                             ),
                                             const SizedBox(height: 3),
                                             CustomText(
-                                              title: 'MANUFACTURE DATE: ${decryptedText(products.manufacturerDate!)}',
-                                              color: Colors.black87,
-                                              textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14),
-                                            ),
+                                                title: 'MANUFACTURE DATE: ${decryptedText(products.manufacturerDate!)}',
+                                                color: Colors.black87,
+                                                textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14)),
                                             const SizedBox(height: 3),
-                                            customRow1(
-                                                'STATUS:',
-                                                products.status == 0
-                                                    ? "NOT ASSIGNED"
-                                                    : products.status == 1
-                                                        ? "ASSIGNED"
-                                                        : products.status == 2
-                                                            ? "OUT FOR DELIVERY"
-                                                            : "COMPLETED"),
+                                            customRow2('Government Verified:', products.govtVerifiedStatus!),
+                                            const SizedBox(height: 3),
+                                            customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
+                                            const SizedBox(height: 3),
+                                            customRow2('Retailer Verified:', products.retailerVerifiedStatus!),
+                                            const SizedBox(height: 3),
+                                            customRow3('Sell Status:', products.status! == 0 ? "No" : "YES"),
                                           ],
                                         ),
                                       ),
-                                      const Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.black,
-                                      )
+                                      const Icon(Icons.arrow_forward, color: Colors.black)
                                     ],
                                   ),
                                 ),

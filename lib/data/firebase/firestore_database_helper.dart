@@ -108,8 +108,8 @@ class FireStoreDatabaseHelper {
     return data;
   }
 
-  static Future<void> updateProductStatus(String productID, {int status = 2}) async {
-    return db.collection(products).doc(productID).update({"isAssignToGovernment": true});
+  static Future<void> confirmProduct(String productID, String customerID) async {
+    return db.collection(products).doc(productID).update({"status": 1, "customerID": customerID});
   }
 
   static Future<void> assignGovernmentProduct(String productID) async {
