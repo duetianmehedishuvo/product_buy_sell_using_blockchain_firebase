@@ -128,8 +128,8 @@ class AuthProvider with ChangeNotifier {
   }
 
   //TODO: for user ROLL:
-  List<String> userRollLists = ['Free'];
-  String selectUserRoll = 'Free';
+  List<String> userRollLists = ['Distributor','Retailer','Customer'];
+  String selectUserRoll = 'Distributor';
 
   changeUserRoll(String value) {
     selectUserRoll = value;

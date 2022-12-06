@@ -64,7 +64,7 @@ class FireStoreDatabaseHelper {
     List<UserModels> data = [];
     await FirebaseFirestore.instance.collection(user).get().then((value) {
       for (var i in value.docs) {
-        if (i.data()['userType'] == 0) {
+        if (i.data()['userType'] == 2) {
           data.add(UserModels.fromJson(i.data()));
         }
       }
@@ -76,7 +76,7 @@ class FireStoreDatabaseHelper {
     List<UserModels> data = [];
     await FirebaseFirestore.instance.collection(user).get().then((value) {
       for (var i in value.docs) {
-        if (i.data()['userType'] == 1) {
+        if (i.data()['userType'] == 3) {
           data.add(UserModels.fromJson(i.data()));
         }
       }
@@ -109,7 +109,23 @@ class FireStoreDatabaseHelper {
   }
 
   static Future<void> updateProductStatus(String productID, {int status = 2}) async {
-    return db.collection(products).doc(productID).update({"status": status});
+    return db.collection(products).doc(productID).update({"isAssignToGovernment": true});
+  }
+
+  static Future<void> assignGovernmentProduct(String productID) async {
+    return db.collection(products).doc(productID).update({"isAssignToGovernment": true});
+  }
+
+  static Future<void> verifiedByGovernmentProduct(String productID) async {
+    return db.collection(products).doc(productID).update({"govtVerifiedStatus": true});
+  }
+
+  static Future<void> assignProductOnDistributors(String distributorsID, String productID) async {
+    db.collection(products).doc(productID).update({"distributorsID": encryptedText(distributorsID), "isAssignDistributor": true});
+  }
+
+  static Future<void> assignProductOnRetailers(String retailersID, String productID) async {
+    db.collection(products).doc(productID).update({"retailerID": encryptedText(retailersID), "distributorsVerifiedStatus": true, "isAssignRetailer": true});
   }
 
   // TODO: for Report

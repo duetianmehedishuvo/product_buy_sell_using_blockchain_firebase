@@ -6,7 +6,7 @@ import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
-import 'package:product_buy_sell/screens/deliveryman/dashboard/deliveryman_product_details_screen.dart';
+import 'package:product_buy_sell/screens/govt/dashboard/govt_product_details_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
@@ -72,7 +72,7 @@ class _DeliveryDashboardScreenState extends State<DeliveryDashboardScreen> {
 
                             return InkWell(
                               onTap: () {
-                                Helper.toScreen(context, DeliveryManDetailsScreen(products, index));
+                                Helper.toScreen(context, GovtProductDetailsScreen(products));
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

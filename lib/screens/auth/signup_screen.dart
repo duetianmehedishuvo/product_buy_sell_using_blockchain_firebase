@@ -49,6 +49,23 @@ class SignupScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(9)),
                       child: Column(
                         children: [
+                          Row(
+                            children: [
+                              const SizedBox(width: 3),
+                              const Expanded(child: CustomText(title: 'Select Role', color: Colors.black, fontSize: 16)),
+                              DropdownButton<String>(
+                                value: authProvider.selectUserRoll,
+                                items: authProvider.userRollLists
+                                    .map((label) =>
+                                        DropdownMenuItem(value: label, child: CustomText(title: label, color: Colors.black, fontSize: 17)))
+                                    .toList(),
+                                underline: const SizedBox.shrink(),
+                                onChanged: (value) {
+                                  authProvider.changeUserRoll(value!);
+                                },
+                              ),
+                            ],
+                          ),
                           CustomTextField(
                             hintText: 'Name *',
                             prefixIconUrl: Icons.share_location_outlined,
@@ -113,7 +130,11 @@ class SignupScreen extends StatelessWidget {
                                                   address: addressController.text,
                                                   password: passwordController.text,
                                                   phone: phoneController.text,
-                                                  userType: 0),
+                                                  userType: authProvider.selectUserRoll == authProvider.userRollLists[0]
+                                                      ? 2
+                                                      : authProvider.selectUserRoll == authProvider.userRollLists[1]
+                                                          ? 3
+                                                          : 4),
                                               context)
                                           .then((value) {
                                         if (value == true) {
@@ -121,18 +142,6 @@ class SignupScreen extends StatelessWidget {
                                         }
                                       });
                                     }
-
-                                    // authProvider
-                                    //     .signup(firstNameController.text, lastNameController.text, phoneController.text,
-                                    //         emailController.text, passwordController.text, outletNameController.text)
-                                    //     .then((value) {
-                                    //   if (value.status == true) {
-                                    //     showMessage(context, message: value.message, isError: false);
-                                    //     Navigator.of(context).pop();
-                                    //   } else {
-                                    //     showMessage(context, message: value.message);
-                                    //   }
-                                    // });
                                   }),
                           const SizedBox(height: 20),
                           CustomText(title: 'Have an account?', textStyle: sfProStyle300Light.copyWith(color: colorPrimary, fontSize: 16)),

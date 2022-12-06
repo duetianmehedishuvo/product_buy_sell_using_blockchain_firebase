@@ -5,6 +5,7 @@ import 'package:product_buy_sell/data/model/response/product_model.dart';
 import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
+import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/util/size.util.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -14,30 +15,29 @@ import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class DistributorsProductDetailsScreen extends StatefulWidget {
   final ProductModel productModel;
-  final bool isHideDistributorsInfo;
 
-  const ProductDetailsScreen(this.productModel, {this.isHideDistributorsInfo = false, Key? key}) : super(key: key);
+  const DistributorsProductDetailsScreen(this.productModel, {Key? key}) : super(key: key);
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  State<DistributorsProductDetailsScreen> createState() => _DistributorsProductDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _DistributorsProductDetailsScreenState extends State<DistributorsProductDetailsScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     if (widget.productModel.govtVerifiedStatus == true &&
-        widget.productModel.distributorsVerifiedStatus == false &&
-        widget.productModel.retailerVerifiedStatus == false) {
-      Provider.of<AdminDashboardProvider>(context, listen: false).getAllData();
+        widget.productModel.isAssignDistributor == true &&
+        widget.productModel.isAssignRetailer == false) {
+      Provider.of<AdminDashboardProvider>(context, listen: false).getAllData1();
     }
 
-    Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.retailerID!),
-        decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
+    // Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.retailerID!),
+    //     decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
   }
 
   @override
@@ -71,7 +71,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Divider(color: Colors.black.withOpacity(.1)),
             const SizedBox(height: 15),
 
-            widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignDistributor == false
+            widget.productModel.govtVerifiedStatus == true &&
+                    widget.productModel.isAssignDistributor == true &&
+                    widget.productModel.isAssignRetailer == false
                 ? Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
@@ -82,13 +84,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         borderRadius: BorderRadius.circular(7)),
                     child: Column(
                       children: [
-                        CustomText(
-                            title: 'Select Distributors:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                        CustomText(title: 'Select Retailer:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
                         DropdownButton(
-                          value: dashboardProvider.selectDistributors,
+                          value: dashboardProvider.selectRetailer,
                           isExpanded: true,
                           icon: const Icon(Icons.keyboard_arrow_down),
-                          items: dashboardProvider.distributorsLists.map((UserModels items) {
+                          items: dashboardProvider.retailerLists.map((UserModels items) {
                             return DropdownMenuItem(
                                 value: items,
                                 child: CustomText(
@@ -97,16 +98,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
                           }).toList(),
                           onChanged: (UserModels? newValue) {
-                            dashboardProvider.changeDistributors(newValue!);
+                            dashboardProvider.changeRetailers(newValue!);
                           },
                         ),
                         SizedBox(height: 13),
-                        Container(
-                            width: 120,
+                        SizedBox(
+                            width: 170,
                             child: CustomButton(
-                                btnTxt: 'Assign',
+                                btnTxt: 'Assign & Verified',
                                 onTap: () {
-                                  dashboardProvider.assignProductOnDistributors(context).then((value) {
+                                  dashboardProvider.assignProductOnRetailers(context).then((value) {
                                     if (value == true) {
                                       Navigator.of(context).pop();
                                     }
@@ -116,12 +117,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   )
                 : StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.distributorsID!)).snapshots(),
+                    stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.retailerID!)).snapshots(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (!snapshot.hasData || !snapshot.hasData == null) {
                         return Center(
                             child: Text(
-                          "Distributors Not Found",
+                          "Retailers Not Found",
                           textAlign: TextAlign.center,
                           style: sfProStyle700Bold.copyWith(color: colorPrimary, fontSize: 16),
                         ));
@@ -141,8 +142,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                                title: 'Distributors DETAILS:',
-                                textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+                                title: 'Retailers DETAILS:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
                             Divider(color: Colors.red.withOpacity(.3)),
                             customRow('ID:', deliveryManModels.phone!),
                             customRow('NAME:', deliveryManModels.name!),
@@ -239,50 +239,3 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 }
 
-Widget customRow1(String title, String subTitle) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(title.toUpperCase(), style: sfProStyle700Bold.copyWith(fontSize: 15)),
-      const SizedBox(width: 10),
-      Expanded(child: Text(subTitle, style: sfProStyle500Medium.copyWith(fontSize: 17))),
-    ],
-  );
-}
-
-Widget customRow2(String title, bool isVerified) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(title.toUpperCase(), style: sfProStyle700Bold.copyWith(fontSize: 15)),
-      const SizedBox(width: 10),
-      Expanded(
-          child: Text(isVerified ? 'Verified' : 'Not Verified',
-              style: sfProStyle500Medium.copyWith(fontSize: 17, color: isVerified ? Colors.green : colorPrimary))),
-    ],
-  );
-}
-
-Widget customRow3(String title, String subtitle) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(title.toUpperCase(), style: sfProStyle700Bold.copyWith(fontSize: 15)),
-      const SizedBox(width: 10),
-      Expanded(child: Text(subtitle, style: sfProStyle500Medium.copyWith(fontSize: 17, color: colorOrange))),
-    ],
-  );
-}
-
-Widget customRow(String title, String subTitle) {
-  return Container(
-    margin: const EdgeInsets.only(bottom: 3),
-    child: Row(
-      children: [
-        Text(title, style: sfProStyle500Medium.copyWith(fontSize: 15)),
-        const SizedBox(width: 10),
-        Expanded(child: Text(subTitle, style: sfProStyle400Regular.copyWith(fontSize: 17))),
-      ],
-    ),
-  );
-}

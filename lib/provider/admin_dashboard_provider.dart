@@ -64,28 +64,68 @@ class AdminDashboardProvider with ChangeNotifier {
     return true;
   }
 
-  //TODO:: for Sign Up Section
-  Future<bool> assignProduct(BuildContext context) async {
+  //TODO:: for assignGovernmentProduct
+  Future<bool> assignGovernmentProduct(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
-    FireStoreDatabaseHelper.assignProducts(selectDeliveryMan.phone!, selectDistributors.phone!, productID.toString());
+    FireStoreDatabaseHelper.assignGovernmentProduct(productID.toString());
     showMessage(context, message: 'Product Assign successfully', isError: false);
     _isLoading = false;
     notifyListeners();
     return true;
   }
 
+  //TODO:: for assignProduct
+  Future<bool> assignProduct(BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    FireStoreDatabaseHelper.assignProducts(selectRetailer.phone!, selectDistributors.phone!, productID.toString());
+    showMessage(context, message: 'Product Assign successfully', isError: false);
+    _isLoading = false;
+    notifyListeners();
+    return true;
+  }
+
+  //TODO:: for assignProductOnDistributors
+  Future<bool> assignProductOnDistributors(BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    FireStoreDatabaseHelper.assignProductOnDistributors(selectDistributors.phone!, productID.toString());
+    showMessage(context, message: 'Product Assign successfully', isError: false);
+    _isLoading = false;
+    notifyListeners();
+    return true;
+  }
+  //TODO:: for assignProductOnRetailers
+  Future<bool> assignProductOnRetailers(BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    FireStoreDatabaseHelper.assignProductOnRetailers(selectRetailer.phone!, productID.toString());
+    showMessage(context, message: 'Product Assign successfully', isError: false);
+    _isLoading = false;
+    notifyListeners();
+    return true;
+  }
+
+  updateProductID(int p) {
+    productID = p;
+  }
+
   //TODO: FOR get all users
   List<UserModels> distributorsLists = [];
   UserModels selectDistributors = UserModels();
-  List<UserModels> deliveryManLists = [];
-  UserModels selectDeliveryMan = UserModels();
+  List<UserModels> retailerLists = [];
+  UserModels selectRetailer = UserModels();
 
   getAllData() async {
     distributorsLists = await FireStoreDatabaseHelper.distributorsLists();
     selectDistributors = distributorsLists[0];
-    deliveryManLists = await FireStoreDatabaseHelper.deliveryManLists();
-    selectDeliveryMan = deliveryManLists[0];
+    notifyListeners();
+  }
+
+  getAllData1() async {
+    retailerLists = await FireStoreDatabaseHelper.deliveryManLists();
+    selectRetailer = retailerLists[0];
     notifyListeners();
   }
 
@@ -94,8 +134,8 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeDeliveryMan(value) {
-    selectDeliveryMan = value;
+  changeRetailers(value) {
+    selectRetailer = value;
     notifyListeners();
   }
 
@@ -183,6 +223,18 @@ class AdminDashboardProvider with ChangeNotifier {
     try {
       await FireStoreDatabaseHelper.updateProductStatus(productID.toString(), status: status);
       products[index].status = status;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> verifiedByGovernmentProduct() async {
+    _isLoading = true;
+    try {
+      await FireStoreDatabaseHelper.verifiedByGovernmentProduct(productID.toString());
       _isLoading = false;
       notifyListeners();
       return true;

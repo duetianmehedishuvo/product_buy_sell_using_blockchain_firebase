@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_buy_sell/data/model/response/user_models.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
@@ -40,68 +39,68 @@ class _AddProductScreen2State extends State<AddProductScreen2> {
           return ListView(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                    ],
-                    borderRadius: BorderRadius.circular(7)),
-                child: Column(
-                  children: [
-                    CustomText(title: 'Select Distributors:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-                    DropdownButton(
-                      value: dashboardProvider.selectDistributors,
-                      isExpanded: true,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items: dashboardProvider.distributorsLists.map((UserModels items) {
-                        return DropdownMenuItem(
-                            value: items,
-                            child: CustomText(
-                                title: '${items.name!} -(${items.phone})',
-                                color: Colors.black,
-                                textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
-                      }).toList(),
-                      onChanged: (UserModels? newValue) {
-                        dashboardProvider.changeDistributors(newValue!);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                    ],
-                    borderRadius: BorderRadius.circular(7)),
-                child: Column(
-                  children: [
-                    CustomText(title: 'Select Deliveryman:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-                    DropdownButton(
-                      value: dashboardProvider.selectDeliveryMan,
-                      isExpanded: true,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items: dashboardProvider.deliveryManLists.map((UserModels items) {
-                        return DropdownMenuItem(
-                            value: items,
-                            child: CustomText(
-                                title: '${items.name!} -(${items.phone})',
-                                color: Colors.black,
-                                textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
-                      }).toList(),
-                      onChanged: (UserModels? newValue) {
-                        dashboardProvider.changeDeliveryMan(newValue!);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              //   decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       boxShadow: [
+              //         BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+              //       ],
+              //       borderRadius: BorderRadius.circular(7)),
+              //   child: Column(
+              //     children: [
+              //       CustomText(title: 'Select Distributors:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+              //       DropdownButton(
+              //         value: dashboardProvider.selectDistributors,
+              //         isExpanded: true,
+              //         icon: const Icon(Icons.keyboard_arrow_down),
+              //         items: dashboardProvider.distributorsLists.map((UserModels items) {
+              //           return DropdownMenuItem(
+              //               value: items,
+              //               child: CustomText(
+              //                   title: '${items.name!} -(${items.phone})',
+              //                   color: Colors.black,
+              //                   textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
+              //         }).toList(),
+              //         onChanged: (UserModels? newValue) {
+              //           dashboardProvider.changeDistributors(newValue!);
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              //   decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       boxShadow: [
+              //         BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+              //       ],
+              //       borderRadius: BorderRadius.circular(7)),
+              //   child: Column(
+              //     children: [
+              //       CustomText(title: 'Select Deliveryman:', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
+              //       DropdownButton(
+              //         value: dashboardProvider.selectDeliveryMan,
+              //         isExpanded: true,
+              //         icon: const Icon(Icons.keyboard_arrow_down),
+              //         items: dashboardProvider.deliveryManLists.map((UserModels items) {
+              //           return DropdownMenuItem(
+              //               value: items,
+              //               child: CustomText(
+              //                   title: '${items.name!} -(${items.phone})',
+              //                   color: Colors.black,
+              //                   textStyle: sfProStyle500Medium.copyWith(color: Colors.black, fontSize: 15)));
+              //         }).toList(),
+              //         onChanged: (UserModels? newValue) {
+              //           dashboardProvider.changeDeliveryMan(newValue!);
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
               SizedBox(
                 height: 200,
                 child: Screenshot(
@@ -117,17 +116,19 @@ class _AddProductScreen2State extends State<AddProductScreen2> {
                 },
               ),
               const SizedBox(height: 20),
-              CustomButton(
-                btnTxt: 'Assign',
-                onTap: () {
-                  dashboardProvider.assignProduct(context).then((value) {
-                    if (value == true) {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    }
-                  });
-                },
-              ),
+              dashboardProvider.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : CustomButton(
+                      btnTxt: 'Submit for Verification',
+                      onTap: () {
+                        dashboardProvider.assignGovernmentProduct(context).then((value) {
+                          if (value == true) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          }
+                        });
+                      },
+                    ),
             ],
           );
         },

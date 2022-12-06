@@ -6,8 +6,15 @@ class ProductModel {
     this.price,
     this.manufacturerDate,
     this.expiredDate,
-    this.deliveryManID = "-1",
+    this.retailerID = "-1",
+    this.customerID = "-1",
     this.distributorsID = "-1",
+    this.isAssignToGovernment = false,
+    this.govtVerifiedStatus = false,
+    this.isAssignDistributor = false,
+    this.distributorsVerifiedStatus = false,
+    this.isAssignRetailer = false,
+    this.retailerVerifiedStatus = false,
     this.status = 0,
   });
 
@@ -20,7 +27,14 @@ class ProductModel {
     distributorsID = json['distributorsID'];
     expiredDate = json['expired_date'];
     status = json['status'];
-    deliveryManID = json['deliveryManID'];
+    retailerID = json['retailerID'];
+    customerID = json['customerID'];
+    isAssignToGovernment = json['isAssignToGovernment'];
+    govtVerifiedStatus = json['govtVerifiedStatus'];
+    isAssignDistributor = json['isAssignDistributor'];
+    distributorsVerifiedStatus = json['distributorsVerifiedStatus'];
+    isAssignRetailer = json['isAssignRetailer'];
+    retailerVerifiedStatus = json['retailerVerifiedStatus'];
   }
 
   int? productId;
@@ -29,8 +43,15 @@ class ProductModel {
   double? price;
   String? manufacturerDate;
   String? expiredDate;
-  String? deliveryManID;
+  String? retailerID;
   String? distributorsID;
+  String? customerID;
+  bool? isAssignToGovernment;
+  bool? govtVerifiedStatus;
+  bool? isAssignDistributor;
+  bool? distributorsVerifiedStatus;
+  bool? isAssignRetailer;
+  bool? retailerVerifiedStatus;
   int? status;
 
   Map<String, dynamic> toJson() {
@@ -41,9 +62,16 @@ class ProductModel {
     map['price'] = price;
     map['status'] = status;
     map['distributorsID'] = distributorsID;
-    map['deliveryManID'] = deliveryManID;
+    map['retailerID'] = retailerID;
     map['manufacturer_date'] = manufacturerDate;
     map['expired_date'] = expiredDate;
+    map['customerID'] = customerID;
+    map['isAssignToGovernment'] = isAssignToGovernment;
+    map['govtVerifiedStatus'] = govtVerifiedStatus;
+    map['isAssignDistributor'] = isAssignDistributor;
+    map['distributorsVerifiedStatus'] = distributorsVerifiedStatus;
+    map['isAssignRetailer'] = isAssignRetailer;
+    map['retailerVerifiedStatus'] = retailerVerifiedStatus;
     return map;
   }
 }

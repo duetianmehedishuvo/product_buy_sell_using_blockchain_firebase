@@ -104,7 +104,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection(user)
-                                    .doc(decryptedText(dashboardProvider.productModel.deliveryManID!))
+                                    .doc(decryptedText(dashboardProvider.productModel.retailerID!))
                                     .snapshots(),
                                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                                   if (!snapshot.hasData) {

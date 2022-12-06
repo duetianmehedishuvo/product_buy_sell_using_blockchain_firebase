@@ -41,7 +41,11 @@ class ProductScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else {
               if (snapshots.data!.docs.isEmpty) {
-                return Center(child:  Text('No data available',style: sfProStyle600SemiBold.copyWith(fontSize: 16),));
+                return Center(
+                    child: Text(
+                  'No data available',
+                  style: sfProStyle600SemiBold.copyWith(fontSize: 16),
+                ));
               } else {
                 return ListView.builder(
                   itemCount: snapshots.data!.docs.length,
@@ -86,6 +90,14 @@ class ProductScreen extends StatelessWidget {
                                     color: Colors.black87,
                                     textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14),
                                   ),
+                                  const SizedBox(height: 3),
+                                  customRow2('Government Verified:', products.govtVerifiedStatus!),
+                                  const SizedBox(height: 3),
+                                  customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
+                                  const SizedBox(height: 3),
+                                  customRow2('Retailer Verified:', products.retailerVerifiedStatus!),
+                                  const SizedBox(height: 3),
+                                  customRow3('Sell Status:', products.status! == 0 ? "No" : "YES"),
                                 ],
                               ),
                             ),

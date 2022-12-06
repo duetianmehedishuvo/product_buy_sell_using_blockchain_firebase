@@ -8,7 +8,6 @@ import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
-import 'package:product_buy_sell/screens/distributors/product/distributors_product_details_screen.dart';
 import 'package:product_buy_sell/screens/distributors/search/qr_search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/image.dart';
@@ -18,8 +17,23 @@ import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
-class DistributorsDashboardScreen extends StatelessWidget {
-  const DistributorsDashboardScreen({super.key});
+class DistributorsDashboardScreen extends StatefulWidget {
+  final String phone;
+
+  const DistributorsDashboardScreen(this.phone, {Key? key}) : super(key: key);
+
+  @override
+  State<DistributorsDashboardScreen> createState() => _DistributorsDashboardScreenState();
+}
+
+class _DistributorsDashboardScreenState extends State<DistributorsDashboardScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+    Provider.of<AdminDashboardProvider>(context, listen: false).getDeliveryManProductInfo(widget.phone);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +58,17 @@ class DistributorsDashboardScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         children: [
+          const SizedBox(height: 15),
+          CustomText(
+              title: 'Hello, ${Provider.of<AuthProvider>(context, listen: false).name}',
+              textStyle: sfProStyle600SemiBold.copyWith(fontSize: 15)),
+          const SizedBox(height: 15),
+          CustomButton(
+            btnTxt: 'SCAN PRODUCT',
+            onTap: () {
+              Helper.toScreen(context, const QRSearchScreen());
+            },
+          ),
           const SizedBox(height: 15),
           CustomText(
               title: 'Your Product List:',
@@ -71,10 +96,10 @@ class DistributorsDashboardScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         ProductModel products = ProductModel.fromJson(snapshots.data!.docs[index].data() as Map<String, dynamic>);
 
-                        return (decryptedText(products.distributorsID!) == Provider.of<AuthProvider>(context, listen: false).phone)
+                        return (decryptedText(products.distributorsID!) == widget.phone)
                             ? InkWell(
                                 onTap: () {
-                                  Helper.toScreen(context, DistributorsProductDetailsScreen(products));
+                                  Helper.toScreen(context, ProductDetailsScreen(products, isHideDistributorsInfo: true));
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -112,9 +137,15 @@ class DistributorsDashboardScreen extends StatelessWidget {
                                               textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14),
                                             ),
                                             const SizedBox(height: 3),
-                                            customRow2('Government Verified:', products.govtVerifiedStatus!),
-                                            const SizedBox(height: 3),
-                                            customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
+                                            customRow1(
+                                                'STATUS:',
+                                                products.status == 0
+                                                    ? "NOT ASSIGNED"
+                                                    : products.status == 1
+                                                        ? "ASSIGNED"
+                                                        : products.status == 2
+                                                            ? "OUT FOR DELIVERY"
+                                                            : "COMPLETED"),
                                           ],
                                         ),
                                       ),
