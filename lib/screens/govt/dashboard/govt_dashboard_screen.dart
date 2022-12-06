@@ -21,13 +21,7 @@ class GovtDashboardScreen extends StatefulWidget {
 }
 
 class _GovtDashboardScreenState extends State<GovtDashboardScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-    // Provider.of<AdminDashboardProvider>(context, listen: false).getDeliveryManProductInfo(widget.phone);
-  }
+
 
   @override
   Widget build(BuildContext context) {

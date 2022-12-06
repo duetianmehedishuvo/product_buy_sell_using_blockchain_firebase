@@ -34,9 +34,7 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
         widget.productModel.isAssignRetailer == false) {
       Provider.of<AdminDashboardProvider>(context, listen: false).getAllData1();
     }
-
-    // Provider.of<AdminDashboardProvider>(context, listen: false).getUserInfo(decryptedText(widget.productModel.retailerID!),
-    //     decryptedText(widget.productModel.distributorsID!), widget.productModel.productId.toString());
+    Provider.of<AdminDashboardProvider>(context, listen: false).updateProductID(widget.productModel.productId!);
   }
 
   @override
@@ -150,87 +148,6 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
                         ),
                       );
                     }),
-
-            // dashboardProvider.isLoading
-            //     ? const Center(child: CircularProgressIndicator())
-            //     : Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           widget.isHideDistributorsInfo
-            //               ? const SizedBox.shrink()
-            //               : Container(
-            //                   width: getAppSizeWidth(context),
-            //                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //                   decoration: BoxDecoration(
-            //                       color: Colors.white,
-            //                       boxShadow: [
-            //                         BoxShadow(
-            //                             color: Colors.grey.withOpacity(.2),
-            //                             blurRadius: 10.0,
-            //                             spreadRadius: 3.0,
-            //                             offset: const Offset(0.0, 0.0))
-            //                       ],
-            //                       borderRadius: BorderRadius.circular(10)),
-            //                   child: Column(
-            //                     crossAxisAlignment: CrossAxisAlignment.start,
-            //                     children: [
-            //                       CustomText(
-            //                           title: 'DISTRIBUTORS DETAILS:',
-            //                           textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-            //                       Divider(color: Colors.red.withOpacity(.3)),
-            //                       customRow('ID:', dashboardProvider.distributorsModels.phone!),
-            //                       customRow('NAME:', dashboardProvider.distributorsModels.name!),
-            //                       customRow('ADDRESS:', dashboardProvider.distributorsModels.address!),
-            //                     ],
-            //                   ),
-            //                 ),
-            //           SizedBox(height: widget.isHideDistributorsInfo ? 0 : 15),
-            //           Container(
-            //             width: getAppSizeWidth(context),
-            //             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //             decoration: BoxDecoration(
-            //                 color: Colors.white,
-            //                 boxShadow: [
-            //                   BoxShadow(
-            //                       color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-            //                 ],
-            //                 borderRadius: BorderRadius.circular(10)),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 CustomText(
-            //                     title: 'DELIVERY MAN DETAILS:',
-            //                     textStyle: sfProStyle600SemiBold.copyWith(color: Colors.black, fontSize: 16)),
-            //                 Divider(color: Colors.red.withOpacity(.3)),
-            //                 customRow('ID:', dashboardProvider.deliveryManModels.phone!),
-            //                 customRow('NAME:', dashboardProvider.deliveryManModels.name!),
-            //                 customRow('ADDRESS:', dashboardProvider.deliveryManModels.address!),
-            //               ],
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            // const SizedBox(height: 15),
-            // widget.isHideDistributorsInfo
-            //     ? const SizedBox.shrink()
-            //     : Column(
-            //         children: [
-            //           SizedBox(
-            //             height: 200,
-            //             child: Screenshot(
-            //               controller: dashboardProvider.screenshotController,
-            //               child: dashboardProvider.qrCodeWidget(),
-            //             ),
-            //           ),
-            //           const SizedBox(height: 20),
-            //           CustomButton(
-            //             btnTxt: 'SAVE QR',
-            //             onTap: () {
-            //               dashboardProvider.captureScreenshot();
-            //             },
-            //           ),
-            //         ],
-            //       ),
           ],
         ),
       ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:product_buy_sell/screens/admin/delivery_man/deleveryman_screen.dart';
-import 'package:product_buy_sell/screens/admin/distributors/distributors_screen.dart';
 import 'package:product_buy_sell/screens/admin/product/product_screen.dart';
 import 'package:product_buy_sell/screens/admin/reports/reports_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
@@ -54,34 +52,18 @@ class AdminDashboardScreen extends StatelessWidget {
                 const SizedBox(width: 15),
                 Expanded(
                     child: InkWell(
-                  onTap: () {
-                    Helper.toScreen(context, const DeliveryManScreen());
-                  },
-                  child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Delivery Man'),
-                )),
-              ],
-            ),
-          ),
-          const SizedBox(height: 15),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              children: [
-                Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    Helper.toScreen(context, const DistributorsScreen());
-                  },
-                  child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Distributors'),
-                )),
-                const SizedBox(width: 15),
-                Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    Helper.toScreen(context, const ReportScreen());
-                  },
-                  child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Report'),
-                )),
+                      onTap: () {
+                        Helper.toScreen(context, const ReportScreen());
+                      },
+                      child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Report'),
+                    )),
+                // Expanded(
+                //     child: InkWell(
+                //   onTap: () {
+                //     Helper.toScreen(context, const DeliveryManScreen());
+                //   },
+                //   child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Delivery Man'),
+                // )),
               ],
             ),
           ),
@@ -92,21 +74,24 @@ class AdminDashboardScreen extends StatelessWidget {
           //     children: [
           //       Expanded(
           //           child: InkWell(
-          //               onTap: () {
-          //                 // Helper.toScreen(context, const SliderScreen());
-          //               },
-          //               child: menuWidget3('Slider'))),
+          //         onTap: () {
+          //           Helper.toScreen(context, const DistributorsScreen());
+          //         },
+          //         child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Distributors'),
+          //       )),
           //       const SizedBox(width: 15),
           //       Expanded(
           //           child: InkWell(
-          //               onTap: () {
-          //                 // Helper.toScreen(context, const SliderRunningTextScreen());
-          //               },
-          //               child: menuWidget3('Running Text'))),
+          //         onTap: () {
+          //           Helper.toScreen(context, const ReportScreen());
+          //         },
+          //         child: menuWidget2(customRoundImage(ImagesModel.currencyIcons, 20), 'Report'),
+          //       )),
           //     ],
           //   ),
           // ),
-          const SizedBox(height: 25),
+          // const SizedBox(height: 15),
+          // const SizedBox(height: 25),
         ],
       ),
     );

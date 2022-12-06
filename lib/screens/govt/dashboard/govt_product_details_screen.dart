@@ -43,7 +43,6 @@ class _GovtProductDetailsScreenState extends State<GovtProductDetailsScreen> {
                         Navigator.of(context).pop();
                       }
                     });
-                    // dashboardProvider.captureScreenshot();
                   },
                 )
               : const SizedBox.shrink(),
