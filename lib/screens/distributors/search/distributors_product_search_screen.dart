@@ -22,6 +22,7 @@ class DistributorsProductSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<AdminDashboardProvider>(context, listen: false).getAllData1();
     return Consumer<AdminDashboardProvider>(
         builder: (context, dashboardProvider, child) => Scaffold(
               appBar: buildAppBar('Product Info'),
