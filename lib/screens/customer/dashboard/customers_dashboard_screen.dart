@@ -132,7 +132,7 @@ class _CustomersDashboardScreenState extends State<CustomersDashboardScreen> {
                                                 color: Colors.black87,
                                                 textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14)),
                                             const SizedBox(height: 3),
-                                            customRow2('Government Verified:', products.govtVerifiedStatus!),
+                                            customRow2('Government Verified:', products.manufacturerVerifiedStatus!),
                                             const SizedBox(height: 3),
                                             customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
                                             const SizedBox(height: 3),

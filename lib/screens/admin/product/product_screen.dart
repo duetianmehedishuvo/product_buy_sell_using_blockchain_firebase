@@ -28,12 +28,11 @@ class ProductScreen extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        title: CustomText(title: 'Product', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 20)),
-        backgroundColor: colorPrimary,
-        centerTitle: true,
-        elevation: 0,
-        toolbarHeight: 60,
-      ),
+          title: CustomText(title: 'Product', textStyle: sfProStyle600SemiBold.copyWith(color: Colors.white, fontSize: 20)),
+          backgroundColor: colorPrimary,
+          centerTitle: true,
+          elevation: 0,
+          toolbarHeight: 60),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection(products).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
@@ -41,11 +40,7 @@ class ProductScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else {
               if (snapshots.data!.docs.isEmpty) {
-                return Center(
-                    child: Text(
-                  'No data available',
-                  style: sfProStyle600SemiBold.copyWith(fontSize: 16),
-                ));
+                return Center(child: Text('No data available', style: sfProStyle600SemiBold.copyWith(fontSize: 16)));
               } else {
                 return ListView.builder(
                   itemCount: snapshots.data!.docs.length,
@@ -90,7 +85,7 @@ class ProductScreen extends StatelessWidget {
                                       color: Colors.black87,
                                       textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14)),
                                   const SizedBox(height: 3),
-                                  customRow2('Government Verified:', products.govtVerifiedStatus!),
+                                  customRow2('Manufacturer Verified:', products.manufacturerVerifiedStatus!),
                                   const SizedBox(height: 3),
                                   customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
                                   const SizedBox(height: 3),
@@ -100,10 +95,7 @@ class ProductScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Icon(
-                              Icons.arrow_forward,
-                              color: Colors.black,
-                            )
+                            const Icon(Icons.arrow_forward, color: Colors.black)
                           ],
                         ),
                       ),

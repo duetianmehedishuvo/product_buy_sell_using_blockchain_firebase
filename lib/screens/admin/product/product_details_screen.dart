@@ -30,7 +30,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     // TODO: implement initState
     super.initState();
 
-    if (widget.productModel.govtVerifiedStatus == true &&
+    if (widget.productModel.manufacturerVerifiedStatus == true &&
         widget.productModel.distributorsVerifiedStatus == false &&
         widget.productModel.retailerVerifiedStatus == false) {
       Provider.of<AdminDashboardProvider>(context, listen: false).getAllData();
@@ -50,30 +50,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           children: [
-            customRow1('ID:', widget.productModel.productId.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('TITLE:', decryptedText(widget.productModel.title.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('Quantity:', widget.productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('PRICE:', widget.productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('MANUFACTURE DATE:', decryptedText(widget.productModel.manufacturerDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('EXPIRED DATE:', decryptedText(widget.productModel.expiredDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Government Verified:', widget.productModel.govtVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Distributors Verified:', widget.productModel.distributorsVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Retailer Verified:', widget.productModel.retailerVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow3('Sell Status:', widget.productModel.status! == 0 ? "No" : "YES"),
-            Divider(color: Colors.black.withOpacity(.1)),
-            const SizedBox(height: 15),
-            widget.productModel.govtVerifiedStatus == false || widget.productModel.status != 0
+            productDetailsView(widget.productModel),
+            widget.productModel.manufacturerVerifiedStatus == false
                 ? const SizedBox.shrink()
-                : widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignDistributor == false
+                : widget.productModel.manufacturerVerifiedStatus == true && widget.productModel.isAssignDistributor == false
                     ? Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         decoration: BoxDecoration(
@@ -159,8 +139,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ),
                           );
                         }),
-            SizedBox(height: widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignRetailer == true ? 15 : 0),
-            widget.productModel.govtVerifiedStatus == true && widget.productModel.isAssignRetailer == true
+            SizedBox(
+                height: widget.productModel.manufacturerVerifiedStatus == true && widget.productModel.isAssignRetailer == true ? 15 : 0),
+            widget.productModel.manufacturerVerifiedStatus == true && widget.productModel.isAssignRetailer == true
                 ? StreamBuilder(
                     stream: FirebaseFirestore.instance.collection(user).doc(decryptedText(widget.productModel.retailerID!)).snapshots(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -302,5 +283,33 @@ Widget customRow(String title, String subTitle) {
         Expanded(child: Text(subTitle, style: sfProStyle400Regular.copyWith(fontSize: 17))),
       ],
     ),
+  );
+}
+
+Widget productDetailsView(ProductModel productModel) {
+  return Column(
+    children: [
+      customRow1('ID:', productModel.productId.toString()),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow1('TITLE:', decryptedText(productModel.title.toString())),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow1('Quantity:', productModel.quantity.toString()),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow1('PRICE:', productModel.quantity.toString()),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow1('MANUFACTURE DATE:', decryptedText(productModel.manufacturerDate.toString())),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow1('EXPIRED DATE:', decryptedText(productModel.expiredDate.toString())),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow2('Manufacturer Verified:', productModel.manufacturerVerifiedStatus!),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow2('Distributors Verified:', productModel.distributorsVerifiedStatus!),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow2('Retailer Verified:', productModel.retailerVerifiedStatus!),
+      Divider(color: Colors.black.withOpacity(.1)),
+      customRow3('Sell Status:', productModel.status! == 0 ? "No" : "YES"),
+      Divider(color: Colors.black.withOpacity(.1)),
+      const SizedBox(height: 20),
+    ],
   );
 }

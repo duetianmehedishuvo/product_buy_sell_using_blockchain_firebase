@@ -5,7 +5,6 @@ import 'package:product_buy_sell/screens/admin/admin_dashboard_screen/admin_dash
 import 'package:product_buy_sell/screens/auth/signup_screen.dart';
 import 'package:product_buy_sell/screens/auth/widget/header_widget.dart';
 import 'package:product_buy_sell/screens/customer/dashboard/customers_dashboard_screen.dart';
-import 'package:product_buy_sell/screens/govt/dashboard/govt_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/distributors/dashboard/distributors_dashboard_screen.dart';
 import 'package:product_buy_sell/screens/retailers/dashboard/retailers_dashboard_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
@@ -99,9 +98,7 @@ class LoginScreen extends StatelessWidget {
                                         FireStoreDatabaseHelper.getUserData(phoneController.text).then((value) {
                                           authProvider.saveUserInformation(value);
 
-                                          if (value.userType == 0) {
-                                            Helper.toRemoveUntilScreen(context, const GovtDashboardScreen());
-                                          } else if (value.userType == 1) {
+                                          if (value.userType == 1) {
                                             Helper.toRemoveUntilScreen(context, const AdminDashboardScreen());
                                           } else if (value.userType == 2) {
                                             Helper.toRemoveUntilScreen(context, DistributorsDashboardScreen(phoneController.text));

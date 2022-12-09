@@ -9,8 +9,7 @@ class ProductModel {
     this.retailerID = "-1",
     this.customerID = "-1",
     this.distributorsID = "-1",
-    this.isAssignToGovernment = false,
-    this.govtVerifiedStatus = false,
+    this.manufacturerVerifiedStatus = true,
     this.isAssignDistributor = false,
     this.distributorsVerifiedStatus = false,
     this.isAssignRetailer = false,
@@ -29,8 +28,7 @@ class ProductModel {
     status = json['status'];
     retailerID = json['retailerID'];
     customerID = json['customerID'];
-    isAssignToGovernment = json['isAssignToGovernment'];
-    govtVerifiedStatus = json['govtVerifiedStatus'];
+    manufacturerVerifiedStatus = json['manufacturerVerifiedStatus'];
     isAssignDistributor = json['isAssignDistributor'];
     distributorsVerifiedStatus = json['distributorsVerifiedStatus'];
     isAssignRetailer = json['isAssignRetailer'];
@@ -46,8 +44,7 @@ class ProductModel {
   String? retailerID;
   String? distributorsID;
   String? customerID;
-  bool? isAssignToGovernment;
-  bool? govtVerifiedStatus;
+  bool? manufacturerVerifiedStatus;
   bool? isAssignDistributor;
   bool? distributorsVerifiedStatus;
   bool? isAssignRetailer;
@@ -66,8 +63,7 @@ class ProductModel {
     map['manufacturer_date'] = manufacturerDate;
     map['expired_date'] = expiredDate;
     map['customerID'] = customerID;
-    map['isAssignToGovernment'] = isAssignToGovernment;
-    map['govtVerifiedStatus'] = govtVerifiedStatus;
+    map['manufacturerVerifiedStatus'] = manufacturerVerifiedStatus;
     map['isAssignDistributor'] = isAssignDistributor;
     map['distributorsVerifiedStatus'] = distributorsVerifiedStatus;
     map['isAssignRetailer'] = isAssignRetailer;

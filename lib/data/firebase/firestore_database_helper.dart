@@ -112,9 +112,9 @@ class FireStoreDatabaseHelper {
     return db.collection(products).doc(productID).update({"status": 1, "customerID": customerID});
   }
 
-  static Future<void> assignGovernmentProduct(String productID) async {
-    return db.collection(products).doc(productID).update({"isAssignToGovernment": true});
-  }
+  // static Future<void> assignGovernmentProduct(String productID) async {
+  //   return db.collection(products).doc(productID).update({"isAssignDistributor": true});
+  // }
 
   static Future<void> verifiedByGovernmentProduct(String productID) async {
     return db.collection(products).doc(productID).update({"govtVerifiedStatus": true});

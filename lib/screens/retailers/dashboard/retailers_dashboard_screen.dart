@@ -6,10 +6,12 @@ import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/auth_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/screens/auth/login_screen.dart';
+import 'package:product_buy_sell/screens/customer/search/qr_search_screen.dart';
 import 'package:product_buy_sell/screens/retailers/product/retailer_product_details_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/util/theme/app_colors.dart';
 import 'package:product_buy_sell/util/theme/text.styles.dart';
+import 'package:product_buy_sell/widgets/custom_button.dart';
 import 'package:product_buy_sell/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +41,13 @@ class RetailersDashboardScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         children: [
+          const SizedBox(height: 15),
+          CustomButton(
+            btnTxt: 'SCAN PRODUCT',
+            onTap: () {
+              Helper.toScreen(context, const QRSearchScreen(isOpenRetailer: true));
+            },
+          ),
           const SizedBox(height: 15),
           CustomText(
               title: 'Your Product List:',
@@ -103,7 +112,7 @@ class RetailersDashboardScreen extends StatelessWidget {
                                               textStyle: sfProStyle400Regular.copyWith(color: Colors.black87, fontSize: 14),
                                             ),
                                             const SizedBox(height: 3),
-                                            customRow2('Government Verified:', products.govtVerifiedStatus!),
+                                            customRow2('Manufacturer Verified:', products.manufacturerVerifiedStatus!),
                                             const SizedBox(height: 3),
                                             customRow2('Distributors Verified:', products.distributorsVerifiedStatus!),
                                             const SizedBox(height: 3),

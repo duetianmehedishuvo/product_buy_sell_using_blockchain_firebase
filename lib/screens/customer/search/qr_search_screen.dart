@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:product_buy_sell/screens/customer/search/search_screen.dart';
+import 'package:product_buy_sell/screens/distributors/search/distributors_product_search_screen.dart';
+import 'package:product_buy_sell/screens/retailers/search/retailers_product_search_screen.dart';
 import 'package:product_buy_sell/util/helper.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
 import 'package:product_buy_sell/widgets/snackbar_message.dart';
 
 class QRSearchScreen extends StatefulWidget {
-  const QRSearchScreen({super.key});
+  const QRSearchScreen({this.isOpenDistributors = false,this.isOpenRetailer = false, super.key});
+
+  final bool isOpenDistributors;
+  final bool isOpenRetailer;
 
   @override
   State<QRSearchScreen> createState() => _QRViewExampleState();
@@ -43,11 +48,15 @@ class _QRViewExampleState extends State<QRSearchScreen> {
                             showMessage(context, message: 'Not Found');
                           }
                           cameraController.dispose();
-                          Helper.toReplacementScreenSlideLeftToRight(context, SearchScreen(code));
+                          if (widget.isOpenDistributors) {
+                            Helper.toReplacementScreenSlideLeftToRight(context, DistributorsProductSearchScreen(code));
+                          }else if (widget.isOpenRetailer) {
+                            Helper.toReplacementScreenSlideLeftToRight(context, RetailersProductSearchScreen(code));
+                          } else {
+                            Helper.toReplacementScreenSlideLeftToRight(context, SearchScreen(code));
+                          }
                         }
-                      })
-
-                  )),
+                      }))),
           Positioned(
             right: 0,
             child: IconButton(

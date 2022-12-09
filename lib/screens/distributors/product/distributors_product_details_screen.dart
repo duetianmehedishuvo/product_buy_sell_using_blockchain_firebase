@@ -29,7 +29,7 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
     // TODO: implement initState
     super.initState();
 
-    if (widget.productModel.govtVerifiedStatus == true &&
+    if (widget.productModel.manufacturerVerifiedStatus == true &&
         widget.productModel.isAssignDistributor == true &&
         widget.productModel.isAssignRetailer == false) {
       Provider.of<AdminDashboardProvider>(context, listen: false).getAllData1();
@@ -46,29 +46,8 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           children: [
-            customRow1('ID:', widget.productModel.productId.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('TITLE:', decryptedText(widget.productModel.title.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('Quantity:', widget.productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('PRICE:', widget.productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('MANUFACTURE DATE:', decryptedText(widget.productModel.manufacturerDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('EXPIRED DATE:', decryptedText(widget.productModel.expiredDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Government Verified:', widget.productModel.govtVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Distributors Verified:', widget.productModel.distributorsVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Retailer Verified:', widget.productModel.retailerVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow3('Sell Status:', widget.productModel.status! == 0 ? "No" : "YES"),
-            Divider(color: Colors.black.withOpacity(.1)),
-            const SizedBox(height: 15),
-
-            widget.productModel.govtVerifiedStatus == true &&
+            productDetailsView(widget.productModel),
+            widget.productModel.manufacturerVerifiedStatus == true &&
                     widget.productModel.isAssignDistributor == true &&
                     widget.productModel.isAssignRetailer == false
                 ? Container(
@@ -154,4 +133,3 @@ class _DistributorsProductDetailsScreenState extends State<DistributorsProductDe
     );
   }
 }
-

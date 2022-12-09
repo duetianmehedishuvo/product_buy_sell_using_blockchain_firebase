@@ -56,7 +56,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   Divider(color: Colors.black.withOpacity(.1)),
                   customRow1('EXPIRED DATE:', decryptedText(dashboardProvider.productModel.expiredDate.toString())),
                   Divider(color: Colors.black.withOpacity(.1)),
-                  customRow2('Government Verified:', dashboardProvider.productModel.govtVerifiedStatus!),
+                  customRow2('Government Verified:', dashboardProvider.productModel.manufacturerVerifiedStatus!),
                   Divider(color: Colors.black.withOpacity(.1)),
                   customRow2('Distributors Verified:', dashboardProvider.productModel.distributorsVerifiedStatus!),
                   Divider(color: Colors.black.withOpacity(.1)),

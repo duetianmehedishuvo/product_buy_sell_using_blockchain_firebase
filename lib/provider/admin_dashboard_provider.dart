@@ -68,7 +68,7 @@ class AdminDashboardProvider with ChangeNotifier {
   Future<bool> assignGovernmentProduct(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
-    FireStoreDatabaseHelper.assignGovernmentProduct(productID.toString());
+    FireStoreDatabaseHelper.assignProductOnDistributors(selectDistributors.phone!, productID.toString());
     showMessage(context, message: 'Product Assign successfully', isError: false);
     _isLoading = false;
     notifyListeners();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:product_buy_sell/data/model/response/product_model.dart';
-import 'package:product_buy_sell/helper/secret_key.dart';
 import 'package:product_buy_sell/provider/admin_dashboard_provider.dart';
 import 'package:product_buy_sell/screens/admin/product/product_details_screen.dart';
 import 'package:product_buy_sell/widgets/custom_app_bar.dart';
@@ -23,29 +22,10 @@ class RetailerProductDetailsScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           children: [
-            customRow1('ID:', productModel.productId.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('TITLE:', decryptedText(productModel.title.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('Quantity:', productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('PRICE:', productModel.quantity.toString()),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('MANUFACTURE DATE:', decryptedText(productModel.manufacturerDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow1('EXPIRED DATE:', decryptedText(productModel.expiredDate.toString())),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Government Verified:', productModel.govtVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Distributors Verified:', productModel.distributorsVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow2('Retailer Verified:', productModel.retailerVerifiedStatus!),
-            Divider(color: Colors.black.withOpacity(.1)),
-            customRow3('Sell Status:', productModel.status! == 0 ? "No" : "YES"),
-            Divider(color: Colors.black.withOpacity(.1)),
-            const SizedBox(height: 15),
+            productDetailsView(productModel),
 
-            productModel.govtVerifiedStatus == true &&
+
+            productModel.manufacturerVerifiedStatus == true &&
                     productModel.isAssignDistributor == true &&
                     productModel.isAssignRetailer == true &&
                     productModel.retailerVerifiedStatus == false
